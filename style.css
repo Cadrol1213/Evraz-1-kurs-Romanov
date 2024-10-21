@@ -1,0 +1,61 @@
+h1 {
+    color: orange;
+}
+
+body {
+    background-color: #666666;
+}
+
+.arrow {
+    position: absolute;
+    top: 15%;
+    left: 70%;
+    transform: translate(-50%, -50%);
+    transform: rotate(90deg);
+    cursor: pointer;
+}
+
+.arrow span {
+    display: block;
+    width: 1.5vw;
+    height: 1.5vw;
+    border-bottom: 5px solid white;
+    border-right: 5px solid white;
+    transform: rotate(45deg);
+    margin: -10px;
+    animation: animate 2s infinite;
+}
+
+.arrow span:nth-child(2) {
+    animation-delay: -0.2s;
+}
+
+.arrow span:nth-child(3) {
+    animation-delay: -0.4s;
+}
+@keyframes animate {
+    0% {
+        opacity: 0;
+        transform: rotate(45deg) translate(-20px, -20px);
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+        transform: rotate(45deg) translate(20px, 20px);
+    }
+}
+.tizery {
+    padding: 5px; /* Внутренний отступ со всех сторон от края сайдбара (виджета). Если не требуется - удаляем строку */
+}
+.tizery img {
+    height: 100px; /* Установили принудительно высоту картинки в 100px, на случай если у вас будут все разного размера */
+    margin: 0 10px 0 0; /* Внешний отступ картинки. Сверху 0px, справа 10 px (чтобы не сливалось с текстом), снизу и слева 0 */
+    padding: 5px 0 0 0; /* Внутренний отступ картинки. Сделали сверху 5px, чтобы стало ровно по верхней границе с текстом (не было лесенки) */
+    width: 100px; /* Установили принудительно ширину картинки в 100px, на случай если у вас будут все разного размера */
+}
+.tizery a {
+    display: flex; /* Позиционирование каждого блока с тизером. Оставляем как есть */
+    margin: 10px 0; /* Внешний отступ каждого тизера сверзу и снизу по 10px */
+}
