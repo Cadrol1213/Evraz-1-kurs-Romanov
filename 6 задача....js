@@ -12,24 +12,20 @@ function checkInput() {
     }
 }
 function moveText2() {
-   vcconst inputText = document.getElementById("input").value;
-   vcconst topzadacha = document.getElementById("topzadacha");
-   vctopzadacha.innerText = inputText; // Устанавливаем текст в прямоугольник
-}
-funvction moveText1() {
-   vcconst inputText = document.getElementById("input").value;
-   vcconst rutube = document.getElementById("rutube");
-   vcrutube.innerText = inputText; // Устанавливаем текст в прямоугольник
-}
-
-funvction moveText() {
-   vcconst inputText = document.getElementById("input").value;
-   vcconst rectangle = document.getElementById("rectangle");
-   vcrectangle.innerText = inputText; // Устанавливаем текст в прямоугольник
-}
-funvction concatenateText() {
-   vcconst rectangles = document.getElementById("rectangle");
-   vcconst rectangles1 = document.getElementById("rutube");
+   const inputText = document.getElementById("input").value;
+   const topzadacha = document.getElementById("topzadacha");
+   topzadacha.innerText = inputText; // Устанавливаем текст в прямоугольник
+    funtion moveText1() {
+   const inputText = document.getElementById("input").value;
+   const rutube = document.getElementById("rutube");
+   rutube.innerText = inputText; // Устанавливаем текст в прямоугольник
+        funtion moveText() {
+   const inputText = document.getElementById("input").value;
+   const rectangle = document.getElementById("rectangle");
+   rectangle.innerText = inputText; // Устанавливаем текст в прямоугольник
+            funtion concatenateText() {
+   const rectangles = document.getElementById("rectangle");
+   const rectangles1 = document.getElementById("rutube");
     const rectangles2 = document.getElementById("topzadacha");
 
     let a = "|"
