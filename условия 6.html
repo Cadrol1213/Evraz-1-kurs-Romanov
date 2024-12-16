@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <link rel="stylesheet" href="условия_6.css">
+</head>
+<body>
+
+
+<div id = "divinp1">
+  <span><button onclick="changeBorderColor1()" style="color:gold;" id ="hg"> выбрать золотой блок </button></span>
+  <span><button onclick="changeBorderColor2()" style="color:#87CEEB;" id = "hg1"> выбрать голубой блок </button></span>
+  <span><button onclick="changeBorderColor3()" style="color:#FF8C00;" id = "hg2"> выбрать ораньжевый блок </button></span>
+  <span><button onclick="extraClear()">очистка </button></span>
+
+</div>
+<div>
+  <span>Текущий шаг:</span>
+  <span id = "res" ></span>
+  <span>корды x:</span>
+  <span id = "output"></span>
+  <span>корды Y:</span>
+  <span id = "output1"></span>
+
+  <span> <button onclick="ch1()" id = "ch1" > +1</button> </span>
+  <span> <button onclick="ch2()" id = "ch2" > +5</button> </span>
+  <span> <button onclick="ch3()" id = "ch3" > +10</button> </span>
+  <span> <button onclick="ch4()" id = "ch4" >+50</button> </span>
+  <span> <button onclick="ch5()" id = "ch5" > -1</button> </span>
+  <span> <button onclick="ch6()" id = "ch6" > -5</button> </span>
+  <span> <button onclick="ch7()" id = "ch7" > -10 </button> </span>
+  <span> <button onclick="ch8()" id = "ch8" > -50 </button> </span>
+</div>
+<div>
+  <span><button onclick="moveRight()" id="r"> одвинуть блок вправо</button> </span>
+  <span><button onclick="moveLeft()" id ="r1">подвинуть блок влево</button> </span>
+  <span><button onclick="moveHeight()" id ="r2"> подвинуть блок вверх</button> </span>
+  <span><button onclick="moveDown()" id ="r3">подвинуть блок вниз</button> </span>
+</div>
+<div id = "divrect">
+  <div id="rect1"></div>
+  <div id ="rect2"></div>
+  <div id ="rect3" ></div>
+</div>
+<script src="условия%206.js"></script>
+</body>
+</html>

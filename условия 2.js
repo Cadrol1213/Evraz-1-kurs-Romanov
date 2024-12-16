@@ -1,10 +1,14 @@
-input = document.getElementById("input").value;
+let input = document.getElementById("input");
+let result = document.getElementById('res');
+let answer = ''
+
 function checkInput() {
-    if (input % 2 =="0") {
-        document.getElementById("result").innerText = "введенное число четное"
+    if (input.value %2 ===0) {
+        answer =  "введенное число четное"
     }
     else {
-        document.getElementById("result").innerText = "введенное число не четное"
+         answer = "введенное число не четное"
     }
+    result.innerText = answer
 }
 

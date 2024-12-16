@@ -1,0 +1,27 @@
+#rect1 {
+    display: inline-block; /* Р”РµР»Р°РµРј СКР»РµРјРµРЅС‚ Р±Р»РѕС‡РЅС‹Рё РґР»СЏ Р°РґР°РЅРёСЏ РИС‹СЃРѕС‚С‹ РёРёС‚РёРЅС‹ */
+    background-color: gold ; /* размер */
+    width: 150px; /* Размер изображения */
+    height: 150px; /* Место расположения */
+    Position: Absolute ;
+    Left: 20px;
+    bottom: 550px;
+}
+#rect2 {
+    display: inline-block; /* Р”РµР»Р°РµРј СКР»РµРјРµРЅС‚ Р±Р»РѕС‡РЅС‹Рё РґР»СЏ Р°РґР°РЅРёСЏ РИС‹СЃРѕС‚С‹ РёРёС‚РёРЅС‹ */
+    background-color: deepskyblue ; /* размер */
+    width: 150px; /* Размер изображения */
+    height: 150px; /* Место расположения */
+    Position: Absolute ;
+    Left: 190px;
+    bottom: 550px;
+}
+#rect3 {
+    display: inline-block; /* Р”РµР»Р°РµРј СКР»РµРјРµРЅС‚ Р±Р»РѕС‡РЅС‹Рё РґР»СЏ Р°РґР°РЅРёСЏ РИС‹СЃРѕС‚С‹ РёРёС‚РёРЅС‹ */
+    background-color:orange; /* ширина: */
+    width: 150px; /* Размер изображения */
+    height: 150px; /* Место расположения */
+    Position: Absolute ;
+    bottom: 550px;
+    Left: 360px;
+}

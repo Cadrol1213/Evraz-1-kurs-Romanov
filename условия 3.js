@@ -34,9 +34,11 @@ function checkNumber() {
     // ЗДЕСЬ НЕОБХОДИМО НАПИСАТЬ УСЛОВИЯ (для вас уже готовы переменные a и b, не забудьте)
     if (a > b){
          answer = "первое число больше"
+        divinput1.classList.add('higher'); // это для первого блока
     }
     else if (a < b){
          answer = "второе число больше"
+        divinput2.classList.add('higher'); // это для второго блока
     }
     else {
          answer = "числа равны"

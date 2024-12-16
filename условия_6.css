@@ -1,0 +1,31 @@
+#rect1 {
+    background-color: gold ; /* размер */
+    width: 150px; /* Размер изображения */
+    height: 150px; /* Место расположения */
+    Position: Absolute ;
+    Left: 20px;
+    bottom: 550px;
+}
+#rect2 {
+    background-color: deepskyblue ; /* размер */
+    width: 150px; /* Размер изображения */
+    height: 150px; /* Место расположения */
+    Position: Absolute ;
+    Left: 190px;
+    bottom: 550px;
+}
+#rect3 {
+    background-color:orange; /* ширина: */
+    width: 150px; /* Размер изображения */
+    height: 150px; /* Место расположения */
+    Position: Absolute ;
+    bottom: 550px;
+    Left: 360px;
+}
+#divrect {
+    width: 1500px;	height: 500px; /* Размеры */
+    outline: 2px solid #000; /* Чёрная рамка */
+    border: 3px solid #fff; /* Белая рамка */
+    border-radius: 10px; /* Радиус скругления */
+    position: unset;
+}
