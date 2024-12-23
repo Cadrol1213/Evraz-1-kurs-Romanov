@@ -1,0 +1,41 @@
+.ch1{
+    background-color : white;
+    color : black;
+}
+.ch2{
+    background-color : black;
+    color : white;
+}
+.ch3{
+    background-color : gray;
+    color : black;
+}
+.ch4{
+    background-color : goldenrod;
+    color : black;
+}
+.ch5{
+    background-color : darkblue;
+    color : greenyellow;
+}
+.white{
+    background-color : white;
+    color:black
+}
+.black{
+    background-color : black;
+    color:white
+}
+.gray{
+    background-color : gray;
+    color:black
+}
+.goldenrod{
+    background-color : darkblue;
+    color:greenyellow
+}
+.darkblue{
+    background-color : black;
+    color:goldenrod
+}
+
