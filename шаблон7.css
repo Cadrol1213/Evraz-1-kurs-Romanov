@@ -1,0 +1,61 @@
+body {
+    margin: 0;
+}
+.head {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+
+    color: black;
+}
+.logo {
+    display: flex;
+    align-items: center;
+    font-size: 30px;
+}
+.head-top {
+    display: flex;
+    justify-content: space-between;
+    height: 100px;
+    z-index: 1;
+    color : #FF8C00;
+    font-size: 20px;
+    font-variant-caps: small-caps;
+}
+.head-top-hight {
+    display: flex;
+    flex-direction: row;
+}
+.head-top-hight .hight {
+    display: flex;
+    align-items: center;
+    padding-right: 20px;
+}
+.head-top-hight .hight a {
+    color: orange;
+    text-decoration: none;
+}
+.head-down {
+    background-image: url('https://c.pxhere.com/photos/90/29/clouds_sun_sky_blue_rays_sunbeam_morning_sunburst-667943.jpg!d');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    z-index: 1;
+    color: white;
+    font-size: 60px;
+}
+.head-bottom-text{
+    color: white;
+}
+.img1{
+    height:50px  ;
+    width: 100px;
+
+
+}
