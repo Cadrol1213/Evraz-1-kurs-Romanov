@@ -12,6 +12,7 @@ body {
     display: flex;
     align-items: center;
     font-size: 30px;
+
 }
 .head-top {
     display: flex;
@@ -19,7 +20,7 @@ body {
     height: 100px;
     z-index: 1;
     color : #FF8C00;
-    font-size: 20px;
+    font-size: 25px;
     font-variant-caps: small-caps;
 }
 .head-top-hight {
@@ -56,6 +57,13 @@ body {
 .img1{
     height:50px  ;
     width: 100px;
-
-
+    border-style: solid;
+    border-bottom-color: orange;
+}
+.icon-down{
+    position: relative;
+    border-radius: 50%;
+    height: 45px;
+    width: 45px;
+    border-color:gray
 }
