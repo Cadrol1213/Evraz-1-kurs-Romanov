@@ -50,6 +50,7 @@ body {
     z-index: 1;
     color: white;
     font-size: 60px;
+    height: 200px
 }
 .head-bottom-text{
     color: white;
@@ -57,13 +58,94 @@ body {
 .img1{
     height:50px  ;
     width: 100px;
-    border-style: solid;
-    border-bottom-color: orange;
 }
-.icon-down{
-    position: relative;
-    border-radius: 50%;
-    height: 45px;
-    width: 45px;
-    border-color:gray
+
+.head-history {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+.history-img{
+    padding-top: 40px;
+    position: relative; /* Позволяет абсолютно позиционировать спан */
+    display: flex;
+    justify-content: center; /* Центрирует изображение */
+    align-items: center; /* Центрирует содержимое по вертикали */
+
+}
+.head-history-top{
+    padding-top: 20px;
+    color :     gray;
+}
+.head-history-top1{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 40px;
+    font-family: cursive;
+    font-variant-caps: small-caps;
+
+
+}
+.head-history-top2{
+      display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 40px;
+    font-family: cursive;
+    font-variant-caps: small-caps;
+}
+.history-img-text{
+    position: absolute;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.1); /* Полупрозрачный фон для читаемости */
+    padding: 10px;
+    border: 2px solid white;
+    font-size: 50px;
+    font-family: Georgia, serif;
+    font-variant-caps: small-caps;
+}
+.history-middle-text {
+    padding-top: 40px;
+    padding-left: 18%;
+    display: flex;
+    color: gray;
+    font-variant-caps: small-caps;
+    font-size: 20px;
+    width: 700px;
+
+}
+.middle-text {
+    flex: 1; /* Каждый div занимает одинаковую ширину */
+    border: 2px solid gray;
+    text-align: center;
+    padding: 10px;
+    margin: 0 5px;
+
+}
+.middle-text a {
+    text-decoration: none;
+    color: black;
+}
+.history-bottom-text{
+    display: flex; /* Используем flexbox для расположения div-ов */
+    width: 100%; /* Ширина контейнера */
+}
+.bottom-left-text {
+    width: 400px; /* Определенная ширина для этого див */
+    margin-right: 0; /* Убираем отступ справа */
+}
+
+.bottom-right-text {
+    display: flex; /* Используем flexbox для размещения внутреннего контента */
+    flex-direction: column; /* Располагаем элементы вертикально */
+    width: 100%; /* Занимаем оставшуюся ширину */
+    height: auto; /* Высота меняется в зависимости от содержимого */
+}
+
+.bottom-text3, .bottom-text4 {
+    border: 1px solid gray; /* Серый бордер для текстовых блоков */
+    padding: 10px; /* Внутренние отступы */
+    margin: 0; /* Убираем внешние отступы */
+    background-color: #f9f9f9; /* Фоновый цвет для текста */
 }
