@@ -1,0 +1,18 @@
+.green{
+   color:green;
+}
+.city{
+    color:red
+}
+.divstyle1{
+    ;
+    height:200px  ;
+    width:100px ;
+}
+
+.divstyle2{
+
+    height:200px  ;
+    width:100px ;
+    border-right-color: black;
+}
