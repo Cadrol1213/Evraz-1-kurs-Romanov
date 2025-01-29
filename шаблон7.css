@@ -130,6 +130,7 @@ body {
 .history-bottom-text{
     display: flex; /* Используем flexbox для расположения div-ов */
     width: 100%; /* Ширина контейнера */
+    padding-top:10px;
 }
 .bottom-left-text {
     width: 400px; /* Определенная ширина для этого див */
@@ -148,4 +149,15 @@ body {
     padding: 10px; /* Внутренние отступы */
     margin: 0; /* Убираем внешние отступы */
     background-color: #f9f9f9; /* Фоновый цвет для текста */
+}
+.clients-text-top {
+    display: flex;
+    position: relative;
+    color: black;
+    font-size: 25px;
+    font-variant-caps: small-caps;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
 }

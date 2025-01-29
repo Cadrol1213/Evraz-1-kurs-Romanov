@@ -1,18 +1,33 @@
 .green{
+    font-style: italic;
    color:green;
 }
-.city{
-    color:red
+.city {
+    color: red;
+    text-decoration: underline;
+    font-weight: bold;
 }
-.divstyle1{
-    ;
-    height:200px  ;
-    width:100px ;
+body{
+    display: flex;
+    flex-direction: row;
+}
+.style1, .style2 {
+    margin: 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
 }
 
-.divstyle2{
-
-    height:200px  ;
-    width:100px ;
-    border-right-color: black;
+button {
+    padding: 10px 15px;
+    margin: 5px ;
+    cursor: pointer;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
 }
+
+

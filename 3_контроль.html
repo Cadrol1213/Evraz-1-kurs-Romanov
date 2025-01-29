@@ -6,63 +6,55 @@
     <title>Title</title>
 </head>
 <body id = "body">
-<div id = "divch">
-<div><button onclick="changeColor1()"  id ="chg1" class = "ch1"> фон белый ,текст чёрный,кнопки белые с черным текстом </button></div>
-<div><button onclick="changeColor2()"  id ="chg2" class = "ch2"> фон черный ,текст чёрный,кнопки серые с черным текстом </button></div>
-<div><button onclick="changeColor3()"  id ="chg3 " class = "ch3"> фон серый,текст чёрный,кнопки чёрные с белым текстом </button></div>
-<div><button onclick="changeColor4()"  id ="chg4" class = "ch4"> фон goldenrod,текст чёрный,кнопки darkblue  с greenyellow текстом </button></div>
-<div><button onclick="changeColor5()"  id ="chg5" class = "ch5"> фон darkblue,текст greenyellow,кнопки goldenrod  с greenyellow текстом </button></div>
-</div>
-<div id = "divmin">
-    <span><button onclick="min10()"  id ="min10" > уменьшить на 10</button></span>
-    <span><button onclick="min1()"  id ="min1" > уменьшить на 1</button></span>
-    <span><button onclick="max1()"  id ="max1" > увеличить на 1</button></span>
-    <span><button onclick="max10()"  id ="max10"> увеличить на 10</button></span>
+
+<div>
+    <button onclick="" style="background-color: white; color: black;">Фон белый, текст черный, кнопки белые с черным текстом</button>
 </div>
 <div>
-    <span>Текущее знач:</span>
-    <span id = "res"></span>
-    <span><button onclick="prompt()"  id ="prompt" > </button></span>
+    <button onclick="" style="background-color: black; color: #fff;">Фон черный, текст белый, кнопки серые с черным текстом</button>
 </div>
 <div>
-    <span>Число четное;</span>
-    <div id = "ans"> </div>
-    <span>Число делиться на 3 без остатка:</span>
-        <div id = "ans1"> </div>
-    <span>Число делиться на 5 без остатка:</span>
-        <div id = "ans2"> </div>
-    <span>Число делиться на 7 без остатка:</span>
-        <div id = "ans3"> </div>
+    <button onclick="" style="background-color: grey; color: black;">Фон серый, текст черный, кнопки черные с белым текстом</button>
 </div>
 <div>
-    <div>__________________________________________________________________________________________________________________________</div>
-<div>история четных чисел:</div>
-    <div id = "history1" ></div>
+    <button onclick="" style="background-color: goldenrod; color: black;">Фон goldenrod, текст черный, кнопки darkblue с greenyellow текстом</button>
 </div>
 <div>
-    <div>__________________________________________________________________________________________________________________________</div>
-    <div>история чисел // 3:</div>
-    <div id = "history2" ></div>
+    <button onclick="" style="e,.background-color: darkblue; color: greenyellow;">Фон darkblue, текст greenyellow, кнопки goldenrod с черным текстом</button>
 </div>
+<br>
 <div>
-    <div>__________________________________________________________________________________________________________________________</div>
-    <div>история четных чисел // 5:</div>
-    <div id = "history3" ></div>
-</div>
-<div>
-    <div>__________________________________________________________________________________________________________________________</div>
-    <div>история четных чисел // 7</div>
-    <div id = "history4" ></div>
-</div>
-<div>
-    <div>__________________________________________________________________________________________________________________________</div>
-    <div>история ост чисел:</div>
-    <div id = "history5" ></div>
+    <button onclick="minus10">Уменьшить на 10</button>
+    <button onclick="minus1">Уменьшить на 1</button>
+    <button onclick="plus1">Увеличить на 1</button>
+    <button onclick="plus10">Увеличить на 10</button>
 </div>
 
+<div class="total">
+    Текущее число: <span id="total">0</span>
+    <button onclick="">Изменить число на своё</button>
+</div>
+<br>
+<div>Число четное: <span id="even">-</span></div>
+<div>Число делится на 3 без остатка: <span id="three">-</span></div>
+<div>Число делится на 5 без остатка: <span id="five">-</span></div>
+<div>Число делится на 7 без остатка: <span id="seven">-</span></div>
 
-
-
+<br>
+<div style="border-top: 1px solid grey;">История четных чисел:</div>
+<div id="history_even"></div>
+<br>
+<div style="border-top: 1px solid grey;">История чисел, делящихся на 3 без остатка:</div>
+<div id="history_three"></div>
+<br>
+<div style="border-top: 1px solid grey;">История чисел, делящихся на 5 без остатка:</div>
+<div id="history_five"></div>
+<br>
+<div style="border-top: 1px solid grey;">История чисел, делящихся на 7 без остатка:</div>
+<div id="history_seven"></div>
+<br>
+<div style="border-top: 1px solid grey;">История остальных чисел:</div>
+<div id="history"></div>
 
 
 <script src="3_контроль.js"></script>
