@@ -31,13 +31,6 @@ window.onload = function() {
                     alert("Пожалуйста, введите число от 1 до 4.");
                 }
             }
-
-
-
-
-
-
-
 // Создание элементов после завершения цикла
         for (let i = 0; i < square1; i++) {
             let square = document.createElement("span");
