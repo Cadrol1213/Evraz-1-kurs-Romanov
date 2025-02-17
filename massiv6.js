@@ -42,7 +42,7 @@ function add2() {
                 olElement.append(newElement); // Добавляем li в ol
             } else {
                 addElement1.getElementsByTagName('ol')[0].append(newElement); // Добавляем в существующий ol
-                alert('Убедитесь, что значение названия не пустое');
+
             }
 
             containerElements[i].remove(); // Удаляем из предыдущего контейнера
