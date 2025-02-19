@@ -1,4 +1,5 @@
-let elements = []; // Массив для хранения элементов
+
+let a = 0;
 
 function add1() {
     let addElement = document.getElementById('container');
@@ -14,30 +15,39 @@ function add1() {
         }
         let liElement = document.createElement('li');
         liElement.innerText = input.value;
-
         // Добавляем ID элементу
-        liElement.setAttribute('data-id', elements.length);
-        elements.InnerText=input.value; // Сохраняем значение в массив
+        // liElement.setAttribute('data-id', elements.length);
+        // liElement.setAttribute('data-id', );
+        a += 1;
+        liElement.id = 'el-' + a;
         olElement.appendChild(liElement);
         input.value = '';
+        console.log( liElement.id)
     }
+
 }
 
 function add2() {
     let index = document.getElementById('index').value; // Преобразуем в число
-    let newText = document.getElementById('newText'); // Преобразуем в число
-    console.log(index)
-        if (index >= 0 && index < elements.length) {
-            // Сравниваем текущее значение элемента с новым текстом
-            if (elements[index] === newText) {
-                console.log('Элемент уже имеет этот текст'); // Выводим информацию, если совпадает
+    let newText = document.getElementById('newText').value;
+    let id1 = 'el-' + index;
+    console.log( id1 )
+    if(index>=0 ) {
+        let elem = document.getElementById(id1)
+        if (index == "") {
+            alert("такого id не существует")}
+        else
+            if (newText == '') {
+                alert('введите новое значение ')
             } else {
-                elements[index].innerText= newText; // Заменяем текст элемента
+                console.log(elem)
+                elem.innerText = newText
             }
         } else {
-            alert('Некорректный индекс')
-            console.log('Некорректный индекс'); // Сообщение об ошибке, если индекс вне границ массива
+            alert("такого id не существует")
         }
-    }
+}
+
+
 
 

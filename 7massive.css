@@ -1,8 +1,47 @@
-.div1{
-    position: absolute;
-
+body {
+    font-family: Arial, sans-serif;
+    background-color: #e6eae6; /* светло-серый фон */
+    color: #3c3c3c; /* темно-серый текст */
+    margin: 0;
+    padding: 20px;
 }
-.div2{
-    position: absolute;
-    left: 350px;
+
+.div1, .div2 {
+    width: 900px;
+    background-color: #b2c9b2; /* светло-зеленый фон для блоков */
+    border: 2px solid dimgray; /* зеленая рамка */
+    border-radius: 8px; /* скругленные углы */
+    padding: 15px;
+    margin-bottom: 20px;
+}
+
+input{
+    width: 260px;
+    margin-top: 10px;
+    border: 1px solid #8cbf8c;
+    border-radius: 4px;
+    padding: 5px;
+    margin-right: 10px;
+    margin-bottom: 5px;
+}
+button {
+    background-color: dimgrey;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s; /* эффект при наведении */
+}
+
+button:hover {
+    background-color: #7aaa7a; /* темнее при наведении */
+}
+
+#container {
+    background-color: #d1e3d1;
+    border: 1px dashed #8cbf8c; /* пунктирная рамка */
+    padding: 10px;
+    margin-top: 10px;
+    min-height: 50px; /* минимальная высота контейнера */
 }
