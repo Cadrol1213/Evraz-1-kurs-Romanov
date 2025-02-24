@@ -1,6 +1,7 @@
 
 let a = 0;
 
+
 function add1() {
     let addElement = document.getElementById('container');
     let input = document.getElementById('text');
@@ -10,6 +11,7 @@ function add1() {
         alert('Убедитесь, что значение названия не пустое');
     } else {
         if (!olElement) {
+
             olElement = document.createElement('ol');
             addElement.appendChild(olElement);
         }
@@ -17,8 +19,8 @@ function add1() {
         liElement.innerText = input.value;
         // Добавляем ID элементу
         // liElement.setAttribute('data-id', elements.length);
-        // liElement.setAttribute('data-id', );
         a += 1;
+        liElement.setAttribute('data-idd', a);
         liElement.id = 'el-' + a;
         olElement.appendChild(liElement);
         input.value = '';
