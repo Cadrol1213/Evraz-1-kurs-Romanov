@@ -1,4 +1,4 @@
-
+container = document.getElementById("container")
 window.onload = function() {
     let square1 = 0
     let square2 = 0

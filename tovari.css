@@ -1,0 +1,39 @@
+.Style_div{
+    padding-top: 10px;
+    font-size: 20px;
+}
+.tovar {
+    background-color: #d3d3d3; /* светло-серый цвет */
+    border: 1px solid #a9a9a9; /* чуть темнее серого */
+    border-radius: 10px; /* закругленные края */
+    padding: 20px;
+    position: relative; /* для позиционирования крестика */
+    width: 300px; /* ширина карточки */
+    margin: 20px; /* отступ от других элементов */
+}
+.tovar-name {
+        font-size: 24px;
+        font-weight: bold;
+    }
+.close {
+    position: absolute; /* абсолютное позиционирование */
+    top: 10px; /* отступ от верхнего края */
+    right: 10px; /* отступ от правого края */
+    cursor: pointer; /* указатель при наведении */
+    border-radius: 25%;
+}
+.NewPrice{
+    text-decoration: line-through;
+    text-decoration-color: red;
+}
+.changer{
+    position: absolute; /* абсолютное позиционирование */
+    top: 10px; /* отступ от верхнего края */
+    right: 50px; /* отступ от правого края */
+    cursor: pointer; /* указатель при наведении */
+
+}
+.tovar-price {
+    margin-right: 40px;
+    display: flex;
+}

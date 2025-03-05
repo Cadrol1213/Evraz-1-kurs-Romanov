@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="tovari.css">
+</head>
+<body>
+<div class = "left">
+    <h3> Форма добававления товара</h3>
+    <div class = "Style_div">Название</div>
+    <input id = "name" type="text" placeholder="Пример: Гаечные ключи)">
+    <div class = "Style_div"><label for="Category">Категория</label></div>
+    <div><select id="Category" placeholder="-выбери одно из этого-">
+        <option value="" disabled selected>-выбери одно из этого-</option>
+        <option value="продукты">продукты</option>
+        <option value="техника">техника</option>
+        <option value="украшения">украшения</option>
+        <option value="товары для дома">товары для дома</option>
+        <option value="украшения">украшения</option>
+    </select>
+    </div>
+</div>
+<div class = "Style_div">Стоимость,руб</div>
+<input id = "price" type="number">
+
+<div class = "Style_div">Количество</div>
+<input id = "much" type="number">
+
+<div class="Style_div">Есть скидка?</div>
+<label id="Yes">
+    <input type="radio" name="choice-radio" onclick="CreateInput(this)"> Да
+</label>
+<label id="No">
+    <input type="radio" name="choice-radio" onclick="CreateInput(this)"> Нет
+</label>
+<div id="Yes_NO_cont"></div>
+<div class = "Style_div">Особенности</div>
+<div id = "b/y">
+    <input type="checkbox" id="Specifics" name="interest"  />
+    <label for="Specifics">Б/У</label>
+</div>
+<div id = "broked">
+    <input type="checkbox" id="Specifics1" name="interest" />
+    <label for="Specifics1">Хрупкий</label>
+</div>
+
+<div class = "Style_div">Описание</div>
+<div class="story">
+    <input id="story" type="text" />
+</div>
+<div class = "Style_div">Пункт выдачи</div>
+<div class="geo">
+    <input id="geo" type="text" />
+</div>
+<div class = "Style_div">Тип оплаты</div>
+<div class = cashes style="font-size: 18px">
+<label id="no-cash">
+    <input type="radio" name="cashes" onclick="typeofcash()">Безналичные
+</label>
+<label id="cash">
+    <input type="radio" name="cashes" onclick="typeofcash1()"> Наличные
+</label>
+</div>
+<div class = "Style_div">Цвета</div>
+<div style="margin-bottom: 15px">
+    <select id="colors" placeholder="-выбери одно из этого-">
+    <option value="" disabled selected>-выбери одно из этого-</option>
+    <option value="синий" style="background-color: blue">синий</option>
+    <option value="красный" style="background-color: red">красный</option>
+    <option value="розовый" style="background-color: pink">розовый</option>
+    <option value="серый" style="background-color: gray">серый</option>
+    <option value="белый" style="background-color: white">белый</option>
+</select>
+</div >
+<button onclick="addProduct()">Добавить товар</button>
+<div class = "right">
+    <h3>Товары</h3>
+    <div id = "container1"></div>
+    <div id = "product" class = "tovar">
+        <span class="close"><button onclick="Delete()">✖</button></span>
+        <span class="changer"><button onclick="changer()">✎ </button></span>
+        <span class="arrow"><button onclick="arrow1()">🠝</button></span>
+        <span class="arrow"><button onclick="arrow2()">🠟</button></span>
+        <h3 id = "tovar-name"></h3>
+        <div id = "Category1"></div>
+        <div>Особенности: <div id = "specifics_1"></div></div>
+        <div id = "story1"></div>
+        <div> Цена: <div id = "price1"></div></div>
+        <div>количество: <div id = "much1"></div></div>
+
+    </div>
+</div>
+<script src="Tovari.js"></script>
+</body>
+</html>
