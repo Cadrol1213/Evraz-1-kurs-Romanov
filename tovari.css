@@ -1,39 +1,96 @@
-.Style_div{
+.body{
+    display: flex;
+}
+.left{
+    position: absolute;
+    left:80px;
+
+}
+.right{
+    right: 700px;
+    position: absolute;
+    border-left-color:black ;
+}
+
+
+
+
+.tovar {
+    background-color: #f0f0f0;
+    border:  1px solid #b0b0b0;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Тень для карточки */
+    padding: 20px;
+    position: relative;
+    width: 450px;
+    margin-bottom:  20px;
+    transition: transform 0.3s, box-shadow 0.3s; /* Анимация увеличения карточки при наведении */
+}
+
+.tovar:hover {
+    transform: scale(1.05); /* Увеличение карточки при наведении */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Увеличенная тень */
+}
+
+.Style_div {
     padding-top: 10px;
     font-size: 20px;
 }
-.tovar {
-    background-color: #d3d3d3; /* светло-серый цвет */
-    border: 1px solid #a9a9a9; /* чуть темнее серого */
-    border-radius: 10px; /* закругленные края */
-    padding: 20px;
-    position: relative; /* для позиционирования крестика */
-    width: 300px; /* ширина карточки */
-    margin: 20px; /* отступ от других элементов */
-}
+
 .tovar-name {
-        font-size: 24px;
-        font-weight: bold;
-    }
+    font-size: 30px;
+    font-weight: bold;
+    color: #333; /* Темный цвет текста для заголовка */
+}
+.priceValue1{
+    display: flex;
+    margin-right: 40px;
+}
 .close {
-    position: absolute; /* абсолютное позиционирование */
-    top: 10px; /* отступ от верхнего края */
-    right: 10px; /* отступ от правого края */
-    cursor: pointer; /* указатель при наведении */
-    border-radius: 25%;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    border-radius: 50%; /* Закругленный крестик */
 }
-.NewPrice{
+
+.NewPrice {
     text-decoration: line-through;
-    text-decoration-color: red;
+    color: red; /* Красный цвет для старой цены */
 }
-.changer{
-    position: absolute; /* абсолютное позиционирование */
-    top: 10px; /* отступ от верхнего края */
-    right: 50px; /* отступ от правого края */
-    cursor: pointer; /* указатель при наведении */
+
+.changer {
+    position: absolute;
+    top: 10px;
+    right: 50px;
+    cursor: pointer;
+}
+
+
+
+
+.Style_div{
+    font-weight: bold;
+}
+.addProduct{
+
+    width: 268px;
+    height: 30px;
+    background-color: lightgray;
+    border-color: #cccccc;
+    border-radius: 10px;
+    cursor: pointer;
 
 }
-.tovar-price {
-    margin-right: 40px;
-    display: flex;
+.tovar-price{
+    padding-right: 40px;
+}
+.arrow{
+    cursor: revert;
+}
+.poli{
+    width: 260px;
+}
+.poli1{
+    width: 268px;
 }
