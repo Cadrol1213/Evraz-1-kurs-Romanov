@@ -7,10 +7,11 @@
 </head>
 <body>
 <div class = "left">
-    <h2 > Форма добававления товара</h2>
+    <form action="" id = "form"></form>
+    <div id = "h2form" class = "h2form">Форма добававления товара</div>
     <div class = "Style_div">Название</div>
-    <input id = "name" type="text" placeholder="Пример: Гаечные ключи)">
-    <div class = "Style_div"><label for="Category">Категория</label></div>
+    <input id = "name" class = "poli" type="text"placeholder="Пример: Гаечные ключи)" >
+    <div class = "Style_div" class = "poli"><label for="Category">Категория</label></div>
     <div ><select id="Category" placeholder="-выбери одно из этого-" class = "poli1">
         <option value="" disabled selected>-выбери одно из этого-</option>
         <option value="продукты">продукты</option>
@@ -47,63 +48,58 @@
     </div>
 
     <div class = "Style_div">Описание</div>
-    <div class="story">
-        <textarea
-                class = "poli"
-                name=""
-                id="story"
-
-        ></textarea>
-    </div>
-    </div>
-    <div class = "Style_div">Пункт выдачи</div>
-    <div class="geo">
-        <input id="geo" type="text"  class = "poli">
-    </div>
-    <div class = "Style_div">Тип оплаты</div>
-    <div class = cashes style="font-size: 18px" class = "poli">
-        <label id="no-cash">
-            <input type="radio" name="cashes" onclick="typeofcash()">Безналичные
-        </label>
-        <label id="cash">
-            <input type="radio" name="cashes" onclick="typeofcash1()"> Наличные
-        </label>
-    </div>
-    <div class = "Style_div">Цвета</div>
-    <div style="margin-bottom: 15px">
-        <select id="colors" placeholder="-выбери одно из этого-" class = "poli1">
-            <option value="" disabled selected>-выбери одно из этого-</option>
-            <option value="синий" style="background-color: blue">синий</option>
-            <option value="красный" style="background-color: red">красный</option>
-            <option value="розовый" style="background-color: pink">розовый</option>
-            <option value="серый" style="background-color: gray">серый</option>
-            <option value="белый" style="background-color: wheat">белый</option>
-        </select>
-    </div >
-    <button onclick="addProduct()" class = "addProduct"><div style="font-weight: bold; font-size: 18px" >Добавить товар</div></button>
+    <textarea id="story" class="poli" placeholder="Введите описание"></textarea>
+</div>
+</div>
+<div class = "Style_div">Пункт выдачи</div>
+<div class="geo">
+    <textarea id="geo" class="poli" placeholder="Введите пункт выдачи"></textarea>
+</div>
+<div class = "Style_div">Тип оплаты</div>
+<div class = cashes style="font-size: 18px" class = "poli">
+    <label id="no-cash">
+        <input type="radio" name="cashes" onclick="typeofcash()">Безналичные
+    </label>
+    <label id="cash">
+        <input type="radio" name="cashes" onclick="typeofcash1()"> Наличные
+    </label>
+</div>
+<div class = "Style_div">Цвета</div>
+<div style="margin-bottom: 15px">
+    <select id="colors" placeholder="-выбери одно из этого-" class = "poli1">
+        <option value="" disabled selected>-выбери одно из этого-</option>
+        <option value="синий" style="background-color: blue">синий</option>
+        <option value="красный" style="background-color: red">красный</option>
+        <option value="розовый" style="background-color: pink">розовый</option>
+        <option value="серый" style="background-color: gray">серый</option>
+        <option value="белый" style="background-color: wheat">белый</option>
+    </select>
+</div >
+<button onclick="addProduct()"  id = "addProduct"><div  >Добавить товар</div></button>
 
 </div>
 <div class = "right">
-    <h2>Товары</h2>
+
+    <div class = "h2form">Товары</div>
+
+
+    <div class = "tovar">
+        <span class="close"><button onclick="Delete(this)">✖</button></span>
+        <span class="changer"><button onclick="changer(this)">✎ </button></span>
+        <span class="arrow"><button onclick="arrow1(this)" >🠝</button></span>
+        <span class="arrow"><button onclick="arrow2(this)">🠟</button></span>
+        <h3 class="producth3">Посудомойка</h3>
+        <div class="product_Category">Техника</div>
+        <div>Особенности: <div>Б/У</div></div>
+        <div>Хорошее качество </div>
+        <div>Цена: <span>10000</span></div>
+        <div>Количество: <span>100</span></div>
+        <div>Пункт выдачи: <span>Нижний Тагил</span></div>
+        <div>Тип оплаты: <span>безнал</span> </div>
+        <div>Цвет: <span style="color:red">красный</span></div>
+    </div>
     <div id = "container1"></div>
-
- <div class = "tovar">
-            <span class="close"><button onclick="Delete(this)">✖</button></span>
-            <span class="changer"><button onclick="changer(this)">✎ </button></span>
-            <span class="arrow"><button onclick="arrow1(this)" >🠝</button></span>
-            <span class="arrow"><button onclick="arrow2(this)">🠟</button></span>
-            <h3 class="producth3">Посудомойка</h3>
-            <div class="product_Category">Техника</div>
-            <div>Особенности: <div>Б/У</div></div>
-            <div>Хорошее качество </div>
-            <div>Цена: <span>10000</span></div>
-            <div>Количество: <span>100</span></div>
-            <div>Пункт выдачи: <span>Нижний Тагил</span></div>
-            <div>Тип оплаты: <span>безнал</span> </div>
-            <div>Цвет: <span style="color:red">красный</span></div>
- </div>
 </div>
-
 <script src="Tovari.js"></script>
 </body>
 </html>

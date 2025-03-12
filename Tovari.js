@@ -2,6 +2,7 @@ let a = 0;
 let b = 0;
 let priceValue1 = 0;
 let TypeCash = ""
+let current_goods = ""
 
 function CreateInput(radio) {
     let container = document.getElementById('Yes_NO_cont');
@@ -16,11 +17,12 @@ function CreateInput1(container) {
     if (!document.getElementById('NewInput')) {
         let inputDiv = document.createElement('div');
         a = 1;
+
         inputDiv.id = 'NewInput';
         inputDiv.innerHTML = `
-            <div class="Style_div"><label>Введите процент скидки:</label></div>
+            <div class="Style_div"><label >Введите процент скидки:</label></div>
             <label>
-                <div><input type="text" id="salary"> %
+                <div><input type="text" id="salary" class = "poli"> %
                 </label></div>
         `;
         container.appendChild(inputDiv);
@@ -34,11 +36,13 @@ function CreateInput2(container) {
         a = 0;
     }
 }
-function typeofcash(){
+
+function typeofcash() {
     TypeCash = 'безналичные'
     console.log(TypeCash)
 }
-function typeofcash1(){
+
+function typeofcash1() {
     TypeCash = 'наличные'
     console.log(TypeCash)
 
@@ -73,25 +77,17 @@ function addProduct() {
 
     if (colors === "красный") {
         translatedColor = "red";
-    }
-
-    else if (colors == "синий") {
+    } else if (colors == "синий") {
         translatedColor = "blue";
-    }
-    else if (colors == "розовый") {
+    } else if (colors == "розовый") {
         translatedColor = "pink";
-    }
-
-    else if (colors == "серый") {
+    } else if (colors == "серый") {
         translatedColor = "darkslategrey;";
 
-    }
-
-    else if (colors == "белый") {
+    } else if (colors == "белый") {
         translatedColor = "wheat";
 
-    }
-    else {
+    } else {
         translatedColor = "unknown color"; // Для неопознанного цвета
     }
     console.log(translatedColor)
@@ -117,11 +113,14 @@ function addProduct() {
             <span class =  "tovar-price">Цена: <span class="NewPrice">${price}</span><span>руб.</span></span>
             <span>Количество: <span>${much}</span></span>
             </div>
-            <div class = "priceValue1">${priceValue1}<span>руб.</span></div>
+            <div class =
+
+
+
+"priceValue1" >${priceValue1}<span>руб.</span></div>
         `;
-    }
-    else {
-        b = b +1
+    } else {
+        b = b + 1
 
         newDiv.id = 'id' + b
         newDiv.innerHTML = `  
@@ -148,19 +147,46 @@ function addProduct() {
 
 function Delete(button) {
     let product = button.parentElement.parentElement;//возвращает родителя
+
     product.remove();
 }
 
-function changer(button) {
-    let productDiv = button.parentElement.parentElement;
-    let nameElement = productDiv.querySelector('.tovar-name');
-    let priceElement = productDiv.querySelector('.NewPrice');
+function change1(button) {
+    console.log(button)
+    let product = document.getElementById(current_goods)
+    let button_Product = document.getElementById("addProduct");
+    let h2form = document.getElementById("h2form");
+    product.className = "tovar"
+    button_Product.innerText = "Добавить товар"
+    button_Product.onclick = addProduct
+    h2form.innerText = "Форма добавления товара"
+}
 
+function changer(button) {
+    // Получаем родительский элемент продукта
+    let product = button.parentElement.parentElement;
+    product.className = "target"; // Изменяем класс продукта
+    console.log(product); // Логируем продукт
+
+    current_goods = product.id
+    console.log(current_goods)
+
+    // Получаем кнопку "Добавить товар" и меняем её текст
+    let addProduct = document.getElementById("addProduct");
+    addProduct.innerText = "Изменить товар";
+    addProduct.onclick = change1
+
+    // Получаем заголовок формы и меняем его текст
+    let h2form = document.getElementById("h2form");
+    h2form.innerText = "Форма изменения товара";
+
+    let TypeCash1 = TypeCash
     let Category = document.getElementById("Category").value;
     let name = document.getElementById("name").value;
-    let Newprice = document.getElementById("price").value;
+    let price = document.getElementById("price").value;
     let much = document.getElementById("much").value;
-
+    let colors = document.getElementById("colors").value;
+    let geo = document.getElementById("geo")
     let Checkbox = document.getElementById("Specifics");
     let Checkbox1 = document.getElementById("Specifics1");
 
@@ -174,36 +200,46 @@ function changer(button) {
 
     let story = document.getElementById("story").value;
 
-    let newName = prompt("Введите новое имя продукта:")
+    let container1 = document.getElementById("container1");
+    let newDiv = document.createElement("div");
+    newDiv.className = "tovar"; // добавляем класс
+    newDiv.setAttribute('data-name', name); // сохраняем имя продукта для обновления
+    let translatedColor;
 
-    nameElement.textContent;
-    let newPrice = prompt("Введите новую цену продукта:", priceElement.textContent);
-    let newCount = prompt("Введите новое количество продукта:", countElement.textContent);
+    if (colors === "красный") {
+        translatedColor = "red";
+    } else if (colors == "синий") {
+        translatedColor = "blue";
+    } else if (colors == "розовый") {
+        translatedColor = "pink";
+    } else if (colors == "серый") {
+        translatedColor = "darkslategrey;";
 
-    if (newName) {
-        nameElement.textContent = newName;
+    } else if (colors == "белый") {
+        translatedColor = "wheat";
+
+    } else {
+        translatedColor = "unknown color"; // Для неопознанного цвета
     }
+    console.log(translatedColor)
 
-    if (newPrice) {
-
-        priceElement.textContent = newPrice;
-    }
-
-    if (newCount) {
-        countElement.textContent = newCount;
-    }
 }
-function arrow1(button) {
-    let product = button.parentElement.parentElement; // получаем родительский элемент товара
-    console.log(product)
-    let prevProduct = product.previousElementSibling; // получаем предыдущий элемент (товар)
-    console.log(prevProduct)
+
+
+
+
+function arrow1(button){
+
+        let product = button.parentElement.parentElement; // получаем родительский элемент товара
+        console.log(product)
+        let prevProduct = product.previousElementSibling; // получаем предыдущий элемент (товар)
+        console.log(prevProduct)
 
     if (prevProduct) { // если есть предыдущий элемент
         product.parentElement.insertBefore(product, prevProduct); // перемещаем текущий товар перед предыдущим
+
     }
 }
-
 function arrow2(button) {
     let product = button.parentElement.parentElement; // получаем родительский элемент товара
     console.log(product)

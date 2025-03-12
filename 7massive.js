@@ -19,7 +19,7 @@ function add1() {
         liElement.innerText = input.value;
         // Добавляем ID элементу
         // liElement.setAttribute('data-id', elements.length);
-        a += 1;
+
         liElement.setAttribute('data-idd', a);
         liElement.id = 'el-' + a;
         olElement.appendChild(liElement);

@@ -1,23 +1,38 @@
 .body{
     display: flex;
 }
-.left{
-    position: absolute;
-    left:80px;
 
-}
 .right{
     right: 700px;
     position: absolute;
-    border-left-color:black ;
+    top: 10px
+
+}
+.addProduct{
+    font-weight: bold;
+    font-size: 14px
 }
 
-
-
+.h2form{
+    font-weight: bold;
+    font-size: 22px;
+}
 
 .tovar {
     background-color: #f0f0f0;
     border:  1px solid #b0b0b0;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Тень для карточки */
+    padding: 20px;
+    position: relative;
+    width: 450px;
+    margin-bottom:  20px;
+    transition: transform 0.3s, box-shadow 0.3s; /* Анимация увеличения карточки при наведении */
+}
+.target{
+    filter: drop-shadow(0 0 30px palevioletred);
+    background-color: #f0f0f0;
+    border:  1px solid palevioletred;
     border-radius: 10px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Тень для карточки */
     padding: 20px;
@@ -65,10 +80,6 @@
     right: 50px;
     cursor: pointer;
 }
-
-
-
-
 .Style_div{
     font-weight: bold;
 }
@@ -86,6 +97,7 @@
     padding-right: 40px;
 }
 .arrow{
+
     cursor: revert;
 }
 .poli{
