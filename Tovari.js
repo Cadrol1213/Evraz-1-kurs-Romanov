@@ -3,6 +3,7 @@ let b = 0;
 let priceValue1 = 0;
 let TypeCash = ""
 let current_goods = ""
+let form = document.getElementById('form');
 
 function CreateInput(radio) {
     let container = document.getElementById('Yes_NO_cont');
@@ -49,6 +50,8 @@ function typeofcash1() {
 }
 
 function addProduct() {
+    event.preventDefault();
+    form.reset();
     let TypeCash1 = TypeCash
     let Category = document.getElementById("Category").value;
     let name = document.getElementById("name").value;
@@ -58,6 +61,7 @@ function addProduct() {
     let geo = document.getElementById("geo")
     let Checkbox = document.getElementById("Specifics");
     let Checkbox1 = document.getElementById("Specifics1");
+
 
     let specifics = "";
     if (Checkbox.checked) {
@@ -113,11 +117,7 @@ function addProduct() {
             <span class =  "tovar-price">Цена: <span class="NewPrice">${price}</span><span>руб.</span></span>
             <span>Количество: <span>${much}</span></span>
             </div>
-            <div class =
-
-
-
-"priceValue1" >${priceValue1}<span>руб.</span></div>
+            <div class ="priceValue1" >${priceValue1}<span>руб.</span></div>
         `;
     } else {
         b = b + 1
@@ -180,73 +180,27 @@ function changer(button) {
     let h2form = document.getElementById("h2form");
     h2form.innerText = "Форма изменения товара";
 
-    let TypeCash1 = TypeCash
-    let Category = document.getElementById("Category").value;
-    let name = document.getElementById("name").value;
-    let price = document.getElementById("price").value;
-    let much = document.getElementById("much").value;
-    let colors = document.getElementById("colors").value;
-    let geo = document.getElementById("geo")
-    let Checkbox = document.getElementById("Specifics");
-    let Checkbox1 = document.getElementById("Specifics1");
-
-    let specifics = "";
-    if (Checkbox.checked) {
-        specifics += "Б/У  ";
-    }
-    if (Checkbox1.checked) {
-        specifics += "Хрупкий  ";
-    }
-
-    let story = document.getElementById("story").value;
-
-    let container1 = document.getElementById("container1");
-    let newDiv = document.createElement("div");
-    newDiv.className = "tovar"; // добавляем класс
-    newDiv.setAttribute('data-name', name); // сохраняем имя продукта для обновления
-    let translatedColor;
-
-    if (colors === "красный") {
-        translatedColor = "red";
-    } else if (colors == "синий") {
-        translatedColor = "blue";
-    } else if (colors == "розовый") {
-        translatedColor = "pink";
-    } else if (colors == "серый") {
-        translatedColor = "darkslategrey;";
-
-    } else if (colors == "белый") {
-        translatedColor = "wheat";
-
-    } else {
-        translatedColor = "unknown color"; // Для неопознанного цвета
-    }
-    console.log(translatedColor)
-
 }
 
-
-
-
-function arrow1(button){
+    function arrow1(button) {
 
         let product = button.parentElement.parentElement; // получаем родительский элемент товара
         console.log(product)
         let prevProduct = product.previousElementSibling; // получаем предыдущий элемент (товар)
         console.log(prevProduct)
 
-    if (prevProduct) { // если есть предыдущий элемент
-        product.parentElement.insertBefore(product, prevProduct); // перемещаем текущий товар перед предыдущим
+        if (prevProduct) { // если есть предыдущий элемент
+            product.parentElement.insertBefore(product, prevProduct); // перемещаем текущий товар перед предыдущим
 
+        }
     }
-}
-function arrow2(button) {
-    let product = button.parentElement.parentElement; // получаем родительский элемент товара
-    console.log(product)
-    let nextProduct = product.nextElementSibling; // получаем следующий элемент (товар)
-    console.log(nextProduct)
+    function arrow2(button) {
+        let product = button.parentElement.parentElement; // получаем родительский элемент товара
+        console.log(product)
+        let nextProduct = product.nextElementSibling; // получаем следующий элемент (товар)
+        console.log(nextProduct)
 
-    if (nextProduct) { // если есть следующий элемент
-        product.parentElement.insertBefore(nextProduct, product); // перемещаем следующий товар перед текущим
+        if (nextProduct) { // если есть следующий элемент
+            product.parentElement.insertBefore(nextProduct, product); // перемещаем следующий товар перед текущим
+        }
     }
-}

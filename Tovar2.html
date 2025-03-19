@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+  <meta charset="UTF-8">
+  <title>Title</title>
 </head>
 <body>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -90,80 +89,126 @@
       border: 1px solid black;
       cursor: pointer;
     }
+
+    .tovar-edit {
+      margin-top: 15px;
+    }
+
+    .hide {
+      display: none !important;
+    }
   </style>
 </head>
 <body>
 <div class="forma">
-  <h3>Форма добавления товара</h3>
+  <form action="" id="form">
+    <h3 id="title-add">Форма добавления товара</h3>
+    <h3 id="title-edit" class="hide">Форма редактирования товара</h3>
 
-  <div class="item">
-    <div>Название</div>
-    <input type="text" placeholder="Прим.: Гаечные ключи" id="name">
-  </div>
-
-  <div class="item">
-    <div>Категория</div>
-    <select id="category">
-      <option selected disabled>Не выбрано</option>
-      <option value="clothes">Одежда</option>
-      <option value="shoes">Обувь</option>
-      <option value="tools">Инструменты</option>
-    </select>
-  </div>
-
-  <div class="item">
-    <div>Стоимость</div>
-    <input type="number" value="0" id="price">
-  </div>
-
-  <div class="item">
-    <div>Количество</div>
-    <input type="number" value="0" id="count">
-  </div>
-
-  <div class="item">
-    <div>Есть скидка?</div>
-
-    <div>
-      <input type="radio" id="yes" name="discount" value="true" onclick="discount(true)">
-      <label for="yes">Да</label>
-
-      <input type="radio" id="no" name="discount" value="false" checked onclick="discount(false)">
-      <label for="no">Нет</label>
+    <div class="item">
+      <div>Название</div>
+      <input type="text" placeholder="Прим.: Гаечные ключи" id="name">
     </div>
-  </div>
 
-  <div class="item" id="discountDom">
-    <div>Скидка, %</div>
-    <input type="number" value="0" id="discount">
-  </div>
-
-  <div class="item">
-    <div>Особенности</div>
-
-    <div>
-      <input type="checkbox" id="bu" name="specials" value="bu">
-      <label for="bu">Б/У</label>
+    <div class="item">
+      <div>Категория</div>
+      <select id="category">
+        <option selected disabled>Не выбрано</option>
+        <option value="clothes">Одежда</option>
+        <option value="shoes">Обувь</option>
+        <option value="tools">Инструменты</option>
+      </select>
     </div>
-    <div>
-      <input type="checkbox" id="fragile" name="specials" value="fragile">
-      <label for="fragile">Хрупкий</label>
+    <div class="item">
+      <div class="item">
+        <div>Пункт выдачи</div>
+        <textarea
+                name=""
+                id="punkt"
+                cols="10"
+                rows="5"
+        ></textarea>
+      </div>
     </div>
-  </div>
+    <div class="item">
+      <div>Стоимость</div>
+      <input type="number" value="0" id="price">
+    </div>
 
-  <div class="item">
-    <div>Описание</div>
-    <textarea
-            name=""
-            id="description"
-            cols="10"
-            rows="5"
-    ></textarea>
-  </div>
+    <div class="item">
+      <div>Количество</div>
+      <input type="number" value="0" id="count">
+    </div>
 
-  <div class="item">
-    <button onclick="addTovar()">Добавить товар</button>
-  </div>
+    <div class="item">
+      <div>цвет</div>
+      <select id="color">
+        <option selected disabled>Не выбрано</option>
+        <option value="pink">розовый</option>
+        <option value="red">красный</option>
+        <option value="blue">синий</option>
+        <option value="green">зелёный</option>
+        <option value="black">чёрный</option>
+        <option value="white">белый</option>
+      </select>
+    </div>
+
+    <div class="item">
+      <div>Оплата</div>
+      <div>
+        <input type="radio" id="nal" name="payment" value="Нал">
+        <label for="nal">Нал</label>
+
+        <input type="radio" id="card" name="payment" value="Карта" checked>
+        <label for="card">Карта</label>
+      </div>
+    </div>
+    <div class="item">
+      <div>Есть скидка?</div>
+
+      <div>
+        <input type="radio" id="yes" name="discount" value="true" onclick="discount(true)">
+        <label for="yes">Да</label>
+
+        <input type="radio" id="no" name="discount" value="false" checked onclick="discount(false)">
+        <label for="no">Нет</label>
+      </div>
+    </div>
+
+    <div class="item" id="discountDom">
+      <div>Скидка, %</div>
+      <input type="number" value="0" id="discount">
+    </div>
+
+    <div class="item">
+      <div>Особенности</div>
+
+      <div>
+        <input type="checkbox" id="bu" name="specials"
+               value="bu">
+        <label for="bu">Б/У</label>
+      </div>
+      <div>
+        <input type="checkbox" id="fragile" name="specials" value="fragile">
+        <label for="fragile">Хрупкий</label>
+      </div>
+    </div>
+
+    <div class="item">
+      <div>Описание</div>
+      <textarea
+              name=""
+              id="description"
+              cols="10"
+              rows="5"
+      ></textarea>
+    </div>
+
+    <div class="item">
+      <button id="button-add" onclick="addTovar()">Добавить товар</button>
+      <button id="button-edit" class="hide" onclick="editTovar()">Редактировать товар</button>
+    </div>
+  </form>
 </div>
 <div class="tovary">
   <h3>Товары</h3>
@@ -175,9 +220,9 @@
       <div class="tovar-specials">Особенности: </div>
       <div class="tovar-description">Описание</div>
       <div class="tovar-price-count">
-        <!--<div class="tovar-price">Цена: 1000 руб.</div>-->
+        <div class="tovar-price">Цена: 1000 руб.</div>
         <div class="tovar-price">
-          <div>Цена: </div>
+          <div>Цена:</div>
           <div>
             <div class="tovar-price-old">1000 руб.</div>
             <div>1000 руб.</div>
@@ -186,97 +231,12 @@
         <div class="count">Количество: 1000 шт.</div>
       </div>
       <div class="tovar-close">X</div>
+      <div class="tovar-edit">
+        <button onclick="edit()">Редактировать</button>
+      </div>
     </div>
   </div>
 </div>
-<script>
-
-  let listDOM = document.getElementById('list');
-  let inputName = document.getElementById('name');
-  let selectCategory = document.getElementById('category');
-  let inputPrice = document.getElementById('price');
-  let inputCount = document.getElementById('count');
-  let inputDiscount = document.getElementById('discount');
-  let inputDescription = document.getElementById('description');
-
-  let categories = {
-    'clothes': 'Одежда',
-    'shoes': 'Обувь',
-    'tools': 'Инструменты',
-  }
-
-  let specialsObj = {
-    'bu': 'Б/У',
-    'fragile': 'Хрупкое',
-  }
-
-  function discount(item) {
-    let field = document.getElementById('discountDom')
-
-    if (item) {
-      // чтобы перебить ранее написанный стиль с !important
-      field.style.setProperty('display', 'flex', 'important')
-    }
-    else {
-      // чтобы перебить ранее написанный стиль с !important
-      field.style.setProperty('display', 'none', 'important')
-    }
-  }
-
-  function addTovar() {
-    // находим активный радио-инпут, который выбран
-    let discountChoose = document.querySelector('input[name=discount]:checked');
-
-    // создаем контейнер для товара
-    let cardTovar = document.createElement('div');
-    cardTovar.classList.add('tovar');
-
-    // создаем html наполнение для блока с ценой
-    let price = ``;
-
-    // проверим, а есть ли в discountChoose.value значение
-    if (discountChoose.value === 'true') {
-      // inputDiscount
-      let disc = +inputPrice.value * +inputDiscount.value / 100;
-      let newPrice = +inputPrice.value - disc;
-      price = `<div class="tovar-price">
-                    <div>Цена: </div>
-                    <div>
-                        <div class="tovar-price-old">${ inputPrice.value } руб.</div>
-                        <div>${ newPrice } руб.</div>
-                    </div>
-                </div>`
-    }
-    else {
-      price = `<div class="tovar-price">Цена: ${ inputPrice.value } руб.</div>`;
-    }
-
-    // достаем все чекбоксы особенностей и генерируем текст
-    let specialsText = '';
-    let specials = document.querySelectorAll('input[name=specials]:checked');
-
-    for (let i = 0; i < specials.length; i++) {
-      // console.log(specials[i].value, specialsObj[specials[i].value]);
-      specialsText += ' ' + specialsObj[specials[i].value];
-    }
-
-    let card = `<div class="tovar-name">${ inputName.value }</div>
-            <div class="tovar-category">${ categories[selectCategory.value] }</div>
-            <div class="tovar-specials">Особенности: ${ specialsText }</div>
-            <div class="tovar-description">${ inputDescription.value }</div>
-            <div class="tovar-price-count">
-                ${ price }
-                <div class="count">Количество: ${ inputCount.value } шт.</div>
-            </div>
-            <div class="tovar-close">X</div>`
-
-    cardTovar.innerHTML = card;
-    listDOM.append(cardTovar);
-  }
-
-</script>
-</body>
-</html>
-
+<script src="Tovari2.js"></script>
 </body>
 </html>
