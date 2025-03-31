@@ -17,6 +17,7 @@ let products = [];
 
 // переменная для хранения индекса редактируемого товара
 let currentEditProduct = null;
+let currentdelete1 = null;
 
 let categories = {
     'clothes': 'Одежда',
@@ -120,14 +121,12 @@ function addTovarCard(tovar, index) {
             <div class="tovar-color">Цвет: ${colors[tovar.color]}</div>
             <div class="tovar-payment">Способ оплаты: ${tovar.payment}</div>
             <div class="tovar-description">${ tovar.description }</div>
-            <div class="tovar-price-count">
-                ${ price } 
-                
-              if () {
-              }
-                <div class="count">Количество: ${ tovar.count } шт.</div>
+            <div class="tovar-price-count">${ price }<div class="count">Количество: ${ tovar.count } шт.</div>
             </div>
-            <div class="tovar-close">X</div>
+            <div class="tovar-close">
+            <button onclick="delete1(${ index })">  X</button>
+          
+            </div>
             <div class="tovar-edit">
                 <button onclick="edit(${ index })">Редактировать</button>
             </div>`;
@@ -167,6 +166,7 @@ function edit(productIndex) {
         let checkbox = document.querySelector(`input[name=specials][value=${ specialValue }]`);
         if (checkbox) {
             checkbox.checked = true;
+
         }
     }
 }
@@ -206,6 +206,7 @@ function editTovar() {
 
     form.reset();
     buildAgain();
+
 }
 
 // полностью очищаем список продуктов и строим его заново, вызывая функцию построения карточки товара
@@ -215,5 +216,21 @@ function buildAgain() {
     for (let i = 0; i < products.length; i++) {
         let product = products[i];
         addTovarCard(product, i)
+        console.log(product)
     }
+}
+function delete1(productIndex) {
+    currentdelete1= productIndex
+    // Проверяем, существует ли товар с данным индексом
+    if (currentdelete1 >= 0 && currentdelete1 < products.length) {
+        // Удаляем товар из массива
+        products.splice(currentdelete1, 1);
+        console.log(`Товар с индексом ${currentdelete1} удален.`);
+        currentdelete1 = null
+    } else {
+        console.log(`Товар с индексом ${currentdelete1} не найден.`);
+    }
+
+    // Обновляем отображение списка товаров после удаления
+    buildAgain();
 }
