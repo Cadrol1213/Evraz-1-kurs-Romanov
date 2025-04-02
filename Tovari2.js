@@ -17,7 +17,7 @@ let products = [];
 
 // переменная для хранения индекса редактируемого товара
 let currentEditProduct = null;
-let currentdelete1 = null;
+
 
 let categories = {
     'clothes': 'Одежда',
@@ -125,7 +125,6 @@ function addTovarCard(tovar, index) {
             </div>
             <div class="tovar-close">
             <button onclick="delete1(${ index })">  X</button>
-          
             </div>
             <div class="tovar-edit">
                 <button onclick="edit(${ index })">Редактировать</button>
@@ -135,6 +134,10 @@ function addTovarCard(tovar, index) {
     listDOM.append(cardTovar);
 
     form.reset();
+    console.log(localStorage.setItem('test', products))
+    console.log(JSON.parse(products))
+    console.log(JSON.stringify(products))
+
 }
 
 // редактирование товара, открытие свойств товара в форме товара
@@ -220,17 +223,14 @@ function buildAgain() {
     }
 }
 function delete1(productIndex) {
-    currentdelete1= productIndex
+
     // Проверяем, существует ли товар с данным индексом
-    if (currentdelete1 >= 0 && currentdelete1 < products.length) {
-        // Удаляем товар из массива
-        products.splice(currentdelete1, 1);
-        console.log(`Товар с индексом ${currentdelete1} удален.`);
-        currentdelete1 = null
-    } else {
-        console.log(`Товар с индексом ${currentdelete1} не найден.`);
-    }
+        products.splice(productIndex, 1);
+        console.log(`Товар с индексом ${productIndex} удален.`);
+
 
     // Обновляем отображение списка товаров после удаления
     buildAgain();
 }
+
+
