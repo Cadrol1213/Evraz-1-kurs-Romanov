@@ -1,12 +1,22 @@
 let dentsArray = [];
 let RightStatus = "";
 let LeftStatus = "";
-let pos = "";
-let radarPosition = 0; // Глобальная переменная для отслеживания позиции радара
+let step = 0;
+let radarPosition = 10;
+let foundDents = [];
+let ldents = 0;
+let specialMode = false;
+let savedPosition = 0;
+let lastRedPosition = 0;
+let checkedLeft = false;
 
 function add() {
     document.getElementById("container").innerHTML = "";
     document.getElementById("container1").innerHTML = "";
+    foundDents = [];
+    step = 0;
+    ldents = 0;
+    specialMode = false;
 
     let railLengthInput = document.getElementById("top_input").value;
     let railLength = parseInt(railLengthInput) || 500;
@@ -21,7 +31,6 @@ function add() {
     sleeper.style.width = railLength + "px";
     sleeper.id = "rail";
 
-    // Создаем индикаторы
     let indicators = document.createElement("div");
     indicators.className = "radar-indicators";
     let leftIndicator = document.createElement("div");
@@ -36,18 +45,18 @@ function add() {
     indicators.appendChild(rightIndicator);
     sleeper.appendChild(indicators);
 
-    // Создаем радар
     let radar = document.createElement("div");
     radar.id = "radar_id";
     radar.className = "radar";
-    radarPosition = 40; // Устанавливаем начальную позицию
-    radar.style.left = radarPosition + "px"; // Используем переменную radarPosition
+    radarPosition = 10;
+    radar.style.left = radarPosition + "px";
     sleeper.appendChild(radar);
     document.getElementById("container").appendChild(sleeper);
 
+    createDents();
     Algoritm();
     RightCheck();
-    scanRail()
+    scanRail();
 }
 
 function Algoritm() {
@@ -56,7 +65,6 @@ function Algoritm() {
         console.error("Радар не создался");
         return;
     }
-    // Получаем текущую позицию радара из глобальной переменной
     console.log(`Текущая позиция радара: ${radarPosition}px`);
     console.log(dentsArray);
     return {
@@ -89,12 +97,11 @@ function createDents() {
 }
 
 function RightCheck() {
-    let railLengthInput1 = document.getElementById("rail");
-    const { width } = railLengthInput1.getBoundingClientRect();
-    console.log(dentsArray);
+    let rail = document.getElementById("rail");
+    const { width } = rail.getBoundingClientRect();
 
     let radar = document.getElementById("radar_id");
-    radarPosition = parseInt(radar.style.left) || 0; // Обновляем глобальную переменную
+    radarPosition = parseInt(radar.style.left) || 0;
 
     let minDistRight = width;
     let minDistLeft = width;
@@ -105,25 +112,19 @@ function RightCheck() {
             const dist1 = radarPosition - element;
             if (dist1 < minDistLeft) {
                 minDistLeft = dist1;
-                console.log("Min Left Distance:", minDistLeft);
             }
         }
         else if (element > radarPosition) {
             const dist = element - radarPosition;
             if (dist < minDistRight) {
                 minDistRight = dist;
-                console.log("Min Right Distance:", minDistRight);
             }
         }
         else if (element == radarPosition) {
             check_under = element - radarPosition;
-            console.log("Direct hit:", check_under);
         }
     }
 
-    RegisterArea();
-
-    // Определяем RightStatus
     if (minDistRight > 10) {
         RightStatus = "Rgreen";
     }
@@ -133,9 +134,7 @@ function RightCheck() {
     else if (minDistRight > 5 && minDistRight <= 10) {
         RightStatus = "Ryellow";
     }
-    console.log("Right Status:", RightStatus);
 
-    // Определяем LeftStatus
     if (minDistLeft > 10) {
         LeftStatus = "Lgreen";
     }
@@ -145,107 +144,113 @@ function RightCheck() {
     else if (minDistLeft > 5 && minDistLeft <= 10) {
         LeftStatus = "Lyellow";
     }
-    console.log("Left Status:", LeftStatus);
-
-    // Движение радара в зависимости от статуса
-    // if (RightStatus === "Rgreen") {
-    //     radarPosition += 20; // Обновляем глобальную переменную
-    //     radar.style.left = radarPosition + "px";
-    //     console.log("Moved right +20px, new position:", radarPosition);
-    // }
-    // else if (RightStatus === "Ryellow") {
-    //     radarPosition += 200; // Обновляем глобальную переменную
-    //     radar.style.left = radarPosition + "px";
-    //     console.log("Moved right +6px, new position:", radarPosition);
-    // }
-
-    // Проверка на прямое попадание
-    if (check_under === 0) {
-        console.log("Точка найдена - прямое попадание!");
-    }
 
     const leftIndicator = document.getElementById("left-indicator");
     const rightIndicator = document.getElementById("right-indicator");
 
-    // Левый индикатор
-    if (minDistLeft > 10) {
-        leftIndicator.className = "indicator left green";
-    }
-    else if (minDistLeft <= 5) {
-        leftIndicator.className = "indicator left red";
-    }
-    else {
-        leftIndicator.className = "indicator left yellow";
-    }
+    leftIndicator.className = "indicator left " +
+        (minDistLeft > 10 ? "green" : minDistLeft <= 5 ? "red" : "yellow");
 
-    // Правый индикатор
-    if (minDistRight > 10) {
-        rightIndicator.className = "indicator right green";
-    }
-    else if (minDistRight <= 5) {
-        rightIndicator.className = "indicator right red";
-    }
-    else {
-        rightIndicator.className = "indicator right yellow";
-    }
+    rightIndicator.className = "indicator right " +
+        (minDistRight > 10 ? "green" : minDistRight <= 5 ? "red" : "yellow");
 }
-
-function RegisterArea() {
-    console.log(radarPosition); // Теперь используем глобальную переменную
-}
-function RegisterArea(){
-    let radar = document.getElementById("radar_id");
-    let currentRight = parseInt(radar.style.left) || 0;
-    console.log(currentRight)
-}
-let foundDents = []; // Массив для найденных вмятин
 
 function scanRail() {
     let radar = document.getElementById("radar_id");
     let rail = document.getElementById("rail");
     const railWidth = rail.getBoundingClientRect().width;
-    //getBoundingClientRect -содержащий информацию о размере элемента и его положении относительно области просмотра
-    radarPosition = 0;
     radar.style.left = radarPosition + "px";
-    foundDents = [];
-    function scanStep() {
+    step = 0;
+    let fastSkipMode = false;
 
+    function scanStep() {
         if (radarPosition >= railWidth) {
-            console.log("Сканирование завершено. Найдены вмятины на позициях:", foundDents);
+            stepscollect(`Сканирование завершено. Всего шагов: ${step}`);
+            console.log("Сканирование завершено. Шагов сделано:", step);
             return;
         }
-        let isDentFound = false;
-        for (let i = 0; i < dentsArray.length; i++) {
-            // Проверяем попадание в вмятину с небольшим допуском (±1px для надежности)
-            if (Math.abs(dentsArray[i] - radarPosition) <= 1) {
-                if (!foundDents.includes(dentsArray[i])) {
-                    console.log(`Найдена вмятина на позиции: ${dentsArray[i]}px`);
-                    foundDents.push(dentsArray[i]);
-                }
-                isDentFound = true;
+
+        let dentFound = false;
+        for (let i = dentsArray.length - 1; i >= 0; i--) {
+            if (Math.abs(dentsArray[i] - radarPosition) <= 0) {
+                stepscollect(`Позиция: ${radarPosition}px - найдена вмятина!`, true);
+                foundDents.push(dentsArray[i]);
+                dentsArray.splice(i, 1);
+                createDents();
+                dentFound = true;
+                fastSkipMode = true;
+                lastRedPosition = radarPosition;
                 break;
             }
         }
-        // Двигаем радар на 1px вправо
-        radarPosition += 1;
+
+        let prevPosition = radarPosition;
+        //лево - красное
+        if (LeftStatus === "Lred" && RightStatus === "Rgreen") {
+            radarPosition -= 1;
+            step += 1;
+            stepscollect(`-1px  (красный, позиция: ${radarPosition}px)`);
+        }
+        //лево - желое
+        else if (LeftStatus === "Ryellow" && RightStatus === "Rgreen") {
+            radarPosition -= 6;
+            step += 1;
+            stepscollect(`-6px  (желтый, позиция: ${radarPosition}px)`);
+        }
+        //лево - красное,право - желтое
+        else if (LeftStatus === "Lred" && RightStatus === "Ryellow") {
+            if (!checkedLeft) {
+                radarPosition -= 1;
+                checkedLeft = true;
+                step += 1;
+                stepscollect(`-1px  (красный-желтый, позиция: ${radarPosition}px)`);
+            } else {
+                radarPosition = prevPosition + 6;
+                checkedLeft = false;
+                step += 1;
+                stepscollect(` +6px после проверки (позиция: ${radarPosition}px)`);
+            }
+        }
+        //лево - красное,право - желтое
+        else if (RightStatus === "Rgreen" && LeftStatus === "Lgreen") {
+            radarPosition += 20;
+            step += 1;
+            stepscollect(`Быстрое движение +20 (позиция: ${radarPosition}px)`);
+        }
+        else if (RightStatus === "Ryellow" && LeftStatus === "Lgreen") {
+            radarPosition += 6;
+            step += 1;
+            stepscollect(`+6 (позиция: ${radarPosition}px)`);
+        }
+        else if (RightStatus === "Rred" && LeftStatus === "Lgreen") {
+            radarPosition += 1;
+            step += 1;
+            stepscollect(`+1 (позиция: ${radarPosition}px)`);
+        }
+        if (radarPosition < 0) radarPosition = 0;
+        if (radarPosition > railWidth) radarPosition = railWidth;
+
         radar.style.left = radarPosition + "px";
         RightCheck();
-        if (foundDents.length === dentsArray.length) {
-            console.log("Все вмятины найдены! Позиции:", foundDents);
-            return;
-        }
 
-        // интервал (для визуализации)
-        setTimeout(scanStep, 40);
+        setTimeout(scanStep, 50);
     }
+
     scanStep();
 }
-function countingdents(){
-    container1 = document.getElementById("container1")
-    container1.innerText = ""
+
+function stepscollect(message, isDentFound = false) {
+    let container1 = document.getElementById("container1");
+    let stepInfo = document.createElement("div");
+
+    if (isDentFound) {
+        stepInfo.className = "dent-found";
+        stepInfo.textContent = message;
+    } else {
+        stepInfo.className = "step-info";
+        stepInfo.textContent = `Шаг ${step}: ${message}`;
+    }
+
+    container1.appendChild(stepInfo);
+    container1.scrollTop = container1.scrollHeight;
 }
-
-
-
-
-
