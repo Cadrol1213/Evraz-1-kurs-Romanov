@@ -1,26 +1,517 @@
+let dentsArray = [];
+let RightStatus = "";
+let LeftStatus = "";
+let step = 0;
+let radarPosition = 10;
+let foundDents = [];
+let ldents = 0;
+let specialMode = false;
+let savedPosition = 0;
+let lastRedPosition = 0;
+let checkedLeft = false;
+
+function add() {
+document.getElementById("container").innerHTML = "";
+document.getElementById("container1").innerHTML = "";
+foundDents = [];
+step = 0;
+ldents = 0;
+specialMode = false;
+
+let railLengthInput = document.getElementById("top_input").value;
+let railLength = parseInt(railLengthInput) || 500;
+
+let dentsInput = document.getElementById("down_input").value;
+dentsArray = dentsInput.split(',')
+.map(item => parseInt(item.trim()))
+.filter(num => !isNaN(num) && num > 0 && num < railLength);
+
+let sleeper = document.createElement("div");
+sleeper.className = "sleeper";
+sleeper.style.width = railLength + "px";
+sleeper.id = "rail";
+
+let indicators = document.createElement("div");
+indicators.className = "radar-indicators";
+let leftIndicator = document.createElement("div");
+leftIndicator.className = "indicator left";
+leftIndicator.id = "left-indicator";
+
+let rightIndicator = document.createElement("div");
+rightIndicator.className = "indicator right";
+rightIndicator.id = "right-indicator";
+
+indicators.appendChild(leftIndicator);
+indicators.appendChild(rightIndicator);
+sleeper.appendChild(indicators);
+
+let radar = document.createElement("div");
+radar.id = "radar_id";
+radar.className = "radar";
+radarPosition = 10;
+radar.style.left = radarPosition + "px";
+sleeper.appendChild(radar);
+document.getElementById("container").appendChild(sleeper);
+
+createDents();
+Algoritm();
+RightCheck();
+scanRail();
+}
+
+function Algoritm() {
+let radar = document.getElementById("radar_id");
+if (!radar) {
+console.error("Радар не создался");
+return;
+}
+console.log(`Текущая позиция радара: ${radarPosition}px`);
+console.log(dentsArray);
+return {
+radarPosition: radarPosition,
+dents: dentsArray
+};
+}
+
+function createDents() {
+let container = document.getElementById("container");
+let railLengthInput = document.getElementById("top_input").value;
+let railLength = parseInt(railLengthInput) || 500;
+let dentsInput = document.getElementById("down_input").value;
+let dentsArray = dentsInput.split(',')
+.map(item => parseInt(item.trim()))
+.filter(num => !isNaN(num) && num > 0 && num < railLength);
+
+let existingDents = document.querySelectorAll('.dent');
+existingDents.forEach(dent => dent.remove());
+
+dentsArray.forEach(dentPos => {
+let dent = document.createElement("div");
+dent.className = "dent";
+dent.style.left = `${dentPos}px`;
+dent.title = `Дефект на позиции: ${dentPos}px`;
+container.querySelector('.sleeper').appendChild(dent);
+});
+console.log(`Создано ${dentsArray.length} вмятин`);
+return dentsArray;
+}
+
+function RightCheck() {
+let rail = document.getElementById("rail");
+const { width } = rail.getBoundingClientRect();
+
+let radar = document.getElementById("radar_id");
+radarPosition = parseInt(radar.style.left) || 0;
+
+let minDistRight = width;
+let minDistLeft = width;
+let check_under = null;
+
+for (const element of dentsArray) {
+if (element < radarPosition) {
+const dist1 = radarPosition - element;
+if (dist1 < minDistLeft) {
+minDistLeft = dist1;
+}
+}
+else if (element > radarPosition) {
+const dist = element - radarPosition;
+if (dist < minDistRight) {
+minDistRight = dist;
+}
+}
+else if (element == radarPosition) {
+check_under = element - radarPosition;
+}
+}
+
+if (minDistRight > 10) {
+RightStatus = "Rgreen";
+}
+else if (minDistRight <= 5) {
+RightStatus = "Rred";
+}
+else if (minDistRight > 5 && minDistRight <= 10) {
+RightStatus = "Ryellow";
+}
+
+if (minDistLeft > 10) {
+LeftStatus = "Lgreen";
+}
+else if (minDistLeft <= 5) {
+LeftStatus = "Lred";
+}
+else if (minDistLeft > 5 && minDistLeft <= 10) {
+LeftStatus = "Lyellow";
+}
+
+const leftIndicator = document.getElementById("left-indicator");
+const rightIndicator = document.getElementById("right-indicator");
+
+leftIndicator.className = "indicator left " +
+(minDistLeft > 10 ? "green" : minDistLeft <= 5 ? "red" : "yellow");
+
+rightIndicator.className = "indicator right " +
+(minDistRight > 10 ? "green" : minDistRight <= 5 ? "red" : "yellow");
+}
+
+function scanRail() {
+let radar = document.getElementById("radar_id");
+let rail = document.getElementById("rail");
+const railWidth = rail.getBoundingClientRect().width;
+radar.style.left = radarPosition + "px";
+step = 0;
+let fastSkipMode = false;
+
+function scanStep() {
+if (radarPosition >= railWidth) {
+stepscollect(`Сканирование завершено. Всего шагов: ${step}`);
+console.log("Сканирование завершено. Шагов сделано:", step);
+return;
+}
+
+let dentFound = false;
+for (let i = dentsArray.length - 1; i >= 0; i--) {
+if (Math.abs(dentsArray[i] - radarPosition) <= 0) {
+stepscollect(`Позиция: ${radarPosition}px - найдена вмятина!`, true);
+foundDents.push(dentsArray[i]);
+dentsArray.splice(i, 1);
+createDents();
+dentFound = true;
+fastSkipMode = true;
+lastRedPosition = radarPosition;
+break;
+}
+}
+
+let prevPosition = radarPosition;
+console.log(prevPosition)
+//лево - красное
+if (LeftStatus === "Lred" && RightStatus === "Rgreen") {
+radarPosition -= 1;
+step += 1;
+stepscollect(`-1px  (красный, позиция: ${radarPosition}px)`);
+console.log("-1")
+}
+//лево - желое
+else if (LeftStatus === "Lyellow" && RightStatus === "Rgreen") {
+radarPosition -= 6;
+step += 1;
+stepscollect(`-6px  (желтый, позиция: ${radarPosition}px)`);
+console.log("-6")
+}
+//лево - красное,право - желтое
+else if (LeftStatus === "Lred" && RightStatus === "Ryellow") {
+// Находим ближайшую точку слева
+const leftDents = dentsArray.filter(dent => dent < radarPosition);
+const hasLeftDent = leftDents.length > 0;
+// Находим ближайшую точку справа
+const rightDents = dentsArray.filter(dent => dent > radarPosition);
+const hasRightDent = rightDents.length > 0;
+if (hasLeftDent) {
+radarPosition -= 1;
+step += 1;
+stepscollect(`-1px (красный-желтый, есть дефект слева, позиция: ${radarPosition}px)`);
+console.log("-1 (дефект слева)");
+}
+else if (hasRightDent) {
+radarPosition = prevPosition + 6;
+step += 1;
+stepscollect(`+6px (красный-желтый, нет дефектов слева, есть справа, позиция: ${radarPosition}px)`);
+console.log("+6 (дефект справа)");
+}
+else {
+// Если нет дефектов ни слева, ни справа (хотя по статусу такого быть не должно)
+radarPosition += 6;
+step += 1;
+stepscollect(`+6px (красный-желтый, неожиданный случай, позиция: ${radarPosition}px)`);
+console.log("+6 (неожиданный случай)");
+}
+}
+
+else if (RightStatus === "Rgreen" && LeftStatus === "Lgreen") {
+radarPosition += 20;
+step += 1;
+stepscollect(`Быстрое движение +20 (позиция: ${radarPosition}px)`);
+console.log("+20")
+}
+else if (RightStatus === "Ryellow" && LeftStatus === "Lgreen") {
+radarPosition += 6;
+step += 1;
+stepscollect(`+6 (позиция: ${radarPosition}px)`);
+console.log("+6")
+}
+else if (RightStatus === "Rred" && LeftStatus === "Lgreen") {
+radarPosition += 1;
+step += 1;
+stepscollect(`+1 (позиция: ${radarPosition}px)`);
+console.log("+1")
+}
+if (radarPosition < 0) radarPosition = 0;
+if (radarPosition > railWidth) radarPosition = railWidth;
+
+radar.style.left = radarPosition + "px";
+RightCheck();
+
+setTimeout(scanStep, 50);
+}
+
+scanStep();
+}
+
+function stepscollect(message, isDentFound = false) {
+let container1 = document.getElementById("container1");
+let stepInfo = document.createElement("div");
+
+if (isDentFound) {
+stepInfo.className = "dent-found";
+stepInfo.textContent = message;
+} else {
+stepInfo.className = "step-info";
+stepInfo.textContent = `Шаг ${step}: ${message}`;
+}
+
+container1.appendChild(stepInfo);
+container1.scrollTop = container1.scrollHeight;
+}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link
-            rel="stylesheet"
-            href="massive4.css"
-    >
+    <link rel="stylesheet" href="project.css">
 </head>
 <body>
-<div>
-    <input type="text" id="text">
-    <button onclick="add1()">Добавить в список</button>
+<div class = "logo"><img src="https://upload.wikimedia.org/wikipedia/commons/4/41/Evraz_ru.svg"  ></div>
+<div class = "top">
+    <div class = "top-input" >
+
+        <div>Длинна рельса (см): <input type="number" class = "top_input" id = "top_input" min = "1" placeholder="Пример: 500"></div>
+    </div>
+    <div class = "down-input" >
+        <div>Координаты дефектов : <input type="text" class = "down_input" id = "down_input" placeholder="Пример: 5, 15 ,25"></div>
+    </div>
+    <div><button onclick="add()">Запустить программу</button></div>
 </div>
-<div style="font-variant-caps: small-caps;"><h2>добавленные элементы</h2></div>
-<div id = "container"></div>
-<div>
-    <button onclick="add2()">создать нумерованный список из элементов</button>
-    <button onclick="add3()">создать ненумерованный список из элементов</button>
-    <button onclick="TopClear()">очистить список</button>
+<div class = "down-picture">
+    <div id = "container">
+
+
+
+    </div>
 </div>
-<div id = "container1" ></div>
-<script src="massive4.js"></script>
+<div class = "down-text">
+    <div id = "down-text">
+        <div id = "container1"></div>
+    </div>
+</div>
+
+
+<script src="project.js"></script>
 </body>
 </html>
+/* Базовые стили */
+body {
+font-family: Arial, sans-serif;
+margin: 0;
+padding: 20px;
+background-color: #f5f5f5;
+}
+
+/* Логотип */
+.logo {
+position: absolute;
+top: 20px;
+left: 20px;
+z-index: 20;
+height: 40px;
+width: 150px;
+border-radius: 8px;
+box-shadow: 0 2px 8px rgb(211, 85, 16);
+display: flex;
+align-items: center;
+justify-content: center;
+padding: 5px;
+}
+
+.logo img {
+max-height: 100%;
+max-width: 100%;
+}
+
+/* Верхняя панель управления */
+.top {
+background-color: #fff;
+max-width: 600px;
+position: relative;
+margin: 70px auto 20px;
+padding: 20px;
+border-radius: 8px;
+box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.top div {
+margin-bottom: 15px;
+display: flex;
+align-items: center;
+justify-content: space-between;
+}
+
+.top-input,
+.down-input {
+width: 100%;
+}
+
+.top input,
+.down-input input {
+padding: 8px;
+width: 60%;
+border: 1px solid #ccc;
+border-radius: 4px;
+outline: none;
+transition: border-color 0.3s;
+}
+
+.top input:focus,
+.down-input input:focus {
+border-color: darkorange;
+}
+
+button {
+background-color: #FF4500;
+color: #fff;
+border: none;
+padding: 10px 25px;
+border-radius: 4px;
+cursor: pointer;
+font-size: 1em;
+transition: background-color 0.3s ease;
+}
+
+button:hover {
+background-color: #FF4506;
+}
+
+/* Область визуализации */
+.down-picture {
+max-width: 800px;
+margin: 20px auto;
+background-color: #fff;
+padding: 20px;
+border-radius: 8px;
+box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+#container {
+width: 100%;
+min-height: 300px;
+margin-top: 20px;
+position: relative;
+}
+
+/* Стили для рельса и элементов */
+.sleeper {
+position: relative;
+width: 550px;
+height: 100px;
+margin: 15px auto;
+background: linear-gradient(145deg, #7c7c7c, #505050);
+border: 1px solid #444;
+border-radius: 4px;
+box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.6),
+inset 1px 1px 2px rgba(255, 255, 255, 0.1);
+}
+
+.dent {
+position: absolute;
+width: 16px;
+height: 16px;
+top: 50%;
+transform: translateY(-50%);
+border-radius: 50%;
+z-index: 5;
+background: linear-gradient(145deg, #4a4a4a, #2d2d2d);
+border: 1px solid #333;
+box-shadow: inset 2px 2px 4px rgba(255, 255, 255, 0.2),
+inset -2px -2px 4px rgba(0, 0, 0, 0.5),
+0 0 3px rgba(0, 0, 0, 0.8);
+transition: all 0.2s ease;
+}
+
+.dent:hover {
+transform: translateY(-50%) scale(1.1);
+box-shadow: inset 2px 2px 4px rgba(255, 255, 255, 0.3),
+inset -2px -2px 4px rgba(0, 0, 0, 0.6),
+0 0 5px rgba(0, 0, 0, 0.9);
+}
+
+.radar {
+position: absolute;
+left: 0;
+top: 50%;
+transform: translateY(-50%);
+width: 4px;
+height: 130%;
+background-color: rgba(255, 0, 0, 0.7);
+box-shadow: 0 0 10px 2px rgba(255, 0, 0, 0.5);
+z-index: 10;
+/*transition: left 0.1s linear;*/
+}
+
+/* Индикаторы радара */
+.radar-indicators {
+position: absolute;
+top: -40px;
+left: 50%;
+transform: translateX(-50%);
+display: flex;
+gap: 30px;
+z-index: 15;
+}
+
+.indicator {
+width: 20px;
+height: 20px;
+border-radius: 50%;
+background-color: gray;
+border: 2px solid #333;
+transition: all 0.3s ease;
+}
+
+.indicator.green {
+background-color: #00ff00;
+box-shadow: 0 0 10px #00ff00;
+}
+
+.indicator.yellow {
+background-color: #ffff00;
+box-shadow: 0 0 10px #ffff00;
+}
+
+.indicator.red {
+background-color: #ff0000;
+box-shadow: 0 0 10px #ff0000;
+}
+
+/* Анимации */
+@keyframes radar-scan {
+0%, 100% { box-shadow: 0 0 10px 2px rgba(255, 0, 0, 0.5); }
+50% { box-shadow: 0 0 15px 4px rgba(255, 0, 0, 0.8); }
+}
+
+@keyframes dent-detected {
+0% { box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.7); }
+70% { box-shadow: 0 0 0 10px rgba(255, 0, 0, 0); }
+100% { box-shadow: 0 0 0 0 rgba(255, 0, 0, 0); }
+}
+
+
+
+.dent-found {
+color: #ff0000;
+font-weight: bold;
+background-color: #fff0f0;
+padding: 3px;
+border-left: 3px solid #ff0000;
+margin: 3px 0;
+}
