@@ -1,14 +1,35 @@
 let dentsArray = [];
 let RightStatus = "";
 let LeftStatus = "";
-let step = 0
-let radarPosition = 10; // Глобальная переменная для отслеживания позиции радара
-let foundDents = []; // Массив для найденных вмятин
+let step = 0;
+let radarPosition = 10;
+let foundDents = [];
+let ldents = 0;
+let specialMode = false;
+let savedPosition = 0;
+let lastRedPosition = 0;
+let checkedLeft = false;
 
+// Модифицируем функцию add() в project.js
+// Обновленная функция add() в project.js
 function add() {
+    // Показываем валики
+    const rollersContainer = document.getElementById("rollers-container");
+    const rollers = document.querySelectorAll(".roller");
+    rollersContainer.style.display = "block";
+
+    // Активируем анимацию валиков
+    rollers.forEach(roller => {
+        roller.classList.add("active");
+    });
+
+    // Очистка и подготовка
     document.getElementById("container").innerHTML = "";
     document.getElementById("container1").innerHTML = "";
-    foundDents = []; // Очищаем массив найденных вмятин при новом запуске
+    foundDents = [];
+    step = 0;
+    ldents = 0;
+    specialMode = false;
 
     let railLengthInput = document.getElementById("top_input").value;
     let railLength = parseInt(railLengthInput) || 500;
@@ -19,11 +40,11 @@ function add() {
         .filter(num => !isNaN(num) && num > 0 && num < railLength);
 
     let sleeper = document.createElement("div");
-    sleeper.className = "sleeper";
+    sleeper.className = "sleeper rail-rolling";
     sleeper.style.width = railLength + "px";
     sleeper.id = "rail";
 
-    // Создаем индикаторы
+    // Создаем элементы
     let indicators = document.createElement("div");
     indicators.className = "radar-indicators";
     let leftIndicator = document.createElement("div");
@@ -38,27 +59,35 @@ function add() {
     indicators.appendChild(rightIndicator);
     sleeper.appendChild(indicators);
 
-    // Создаем радар
     let radar = document.createElement("div");
     radar.id = "radar_id";
     radar.className = "radar";
-    radarPosition = 10; // Устанавливаем начальную позицию
-    radar.style.left = radarPosition + "px"; // Используем переменную radarPosition
+    radarPosition = 10;
+    radar.style.left = radarPosition + "px";
     sleeper.appendChild(radar);
     document.getElementById("container").appendChild(sleeper);
 
-    Algoritm();
-    RightCheck();
-    scanRail()
-}
+    // По окончании анимации
+    setTimeout(() => {
+        // Убираем валики
+        rollers.forEach(roller => {
+            roller.classList.remove("active");
+        });
+        rollersContainer.style.display = "none";
 
+        // Запускаем основные функции
+        createDents();
+        Algoritm();
+        RightCheck();
+        scanRail();
+    }, 1500);
+}
 function Algoritm() {
     let radar = document.getElementById("radar_id");
     if (!radar) {
         console.error("Радар не создался");
         return;
     }
-    // Получаем текущую позицию радара из глобальной переменной
     console.log(`Текущая позиция радара: ${radarPosition}px`);
     console.log(dentsArray);
     return {
@@ -91,12 +120,11 @@ function createDents() {
 }
 
 function RightCheck() {
-    let railLengthInput1 = document.getElementById("rail");
-    const { width } = railLengthInput1.getBoundingClientRect();
-    console.log(dentsArray);
+    let rail = document.getElementById("rail");
+    const { width } = rail.getBoundingClientRect();
 
     let radar = document.getElementById("radar_id");
-    radarPosition = parseInt(radar.style.left) || 0; // Обновляем глобальную переменную
+    radarPosition = parseInt(radar.style.left) || 0;
 
     let minDistRight = width;
     let minDistLeft = width;
@@ -107,23 +135,19 @@ function RightCheck() {
             const dist1 = radarPosition - element;
             if (dist1 < minDistLeft) {
                 minDistLeft = dist1;
-                console.log("Min Left Distance:", minDistLeft);
             }
         }
         else if (element > radarPosition) {
             const dist = element - radarPosition;
             if (dist < minDistRight) {
                 minDistRight = dist;
-                console.log("Min Right Distance:", minDistRight);
             }
         }
         else if (element == radarPosition) {
             check_under = element - radarPosition;
-            console.log("Direct hit:", check_under);
         }
     }
 
-    // Определяем RightStatus
     if (minDistRight > 10) {
         RightStatus = "Rgreen";
     }
@@ -133,9 +157,7 @@ function RightCheck() {
     else if (minDistRight > 5 && minDistRight <= 10) {
         RightStatus = "Ryellow";
     }
-    console.log("Right Status:", RightStatus , `Текущая позиция радара: ${radarPosition}`);
 
-    // Определяем LeftStatus
     if (minDistLeft > 10) {
         LeftStatus = "Lgreen";
     }
@@ -145,36 +167,15 @@ function RightCheck() {
     else if (minDistLeft > 5 && minDistLeft <= 10) {
         LeftStatus = "Lyellow";
     }
-    console.log("Left Status:", LeftStatus,`Текущая позиция радара: ${radarPosition}`);
-
-    if (check_under === 0) {
-        console.log("Точка найдена - прямое попадание!");
-    }
 
     const leftIndicator = document.getElementById("left-indicator");
     const rightIndicator = document.getElementById("right-indicator");
 
-    // Левый индикатор
-    if (minDistLeft > 10) {
-        leftIndicator.className = "indicator left green";
-    }
-    else if (minDistLeft <= 5) {
-        leftIndicator.className = "indicator left red";
-    }
-    else {
-        leftIndicator.className = "indicator left yellow";
-    }
+    leftIndicator.className = "indicator left " +
+        (minDistLeft > 10 ? "green" : minDistLeft <= 5 ? "red" : "yellow");
 
-    // Правый индикатор
-    if (minDistRight > 10) {
-        rightIndicator.className = "indicator right green";
-    }
-    else if (minDistRight <= 5) {
-        rightIndicator.className = "indicator right red";
-    }
-    else {
-        rightIndicator.className = "indicator right yellow";
-    }
+    rightIndicator.className = "indicator right " +
+        (minDistRight > 10 ? "green" : minDistRight <= 5 ? "red" : "yellow");
 }
 
 function scanRail() {
@@ -182,98 +183,493 @@ function scanRail() {
     let rail = document.getElementById("rail");
     const railWidth = rail.getBoundingClientRect().width;
     radar.style.left = radarPosition + "px";
-    step = 0; // Сбрасываем счетчик шагов при новом сканировании
+    step = 0;
+    let fastSkipMode = false;
 
     function scanStep() {
         if (radarPosition >= railWidth) {
-            console.log("Сканирование завершено. Найдены вмятины на позициях:", foundDents);
-
-            // Сравниваем массивы после завершения сканирования
-            const allDentsFound = dentsArray.length === 0 && foundDents.length > 0;
-            if (allDentsFound) {
-                console.log("Все вмятины были успешно найдены и удалены из массива!");
-            } else if (foundDents.length > 0) {
-                console.log("Были найдены не все вмятины.");
-            } else {
-                console.log("Вмятин не обнаружено.");
-            }
-
-            stepscollect(); // Вызываем сборщик шагов перед завершением
+            stepscollect(`Сканирование завершено. Всего шагов: ${step}`);
+            console.log("Сканирование завершено. Шагов сделано:", step);
             return;
         }
 
-        // Проверяем наличие вмятин на текущей позиции
+        let dentFound = false;
         for (let i = dentsArray.length - 1; i >= 0; i--) {
             if (Math.abs(dentsArray[i] - radarPosition) <= 0) {
-                console.log(`Найдена вмятина на позиции: ${dentsArray[i]}px`);
+                stepscollect(`Позиция: ${radarPosition}px - найдена вмятина!`, true);
                 foundDents.push(dentsArray[i]);
-
-                // Удаляем вмятину из массива
                 dentsArray.splice(i, 1);
-
-                // Обновляем отображение вмятин
                 createDents();
+                dentFound = true;
+                fastSkipMode = true;
+                lastRedPosition = radarPosition;
                 break;
             }
         }
 
-        // Сохраняем предыдущую позицию для сравнения
         let prevPosition = radarPosition;
+        console.log(prevPosition);
 
-        // Определяем движение на основе статусов
-        if (RightStatus === "Rgreen" && LeftStatus == "Lgreen") {
-            radarPosition += 20;
-            console.log("+20");
-            step += 1;
-        }
-        else if (RightStatus === "Ryellow" && LeftStatus == "Lgreen") {
-            radarPosition += 5;
-            console.log("+5");
-            step += 1;
-        }
-        else if (RightStatus === "Rred" && LeftStatus == "Lgreen") {
-            radarPosition += 1;
-            console.log("+1");
-            step += 1;
-        }
-
-        // Если слева красный или желтый - отступаем
-        if (LeftStatus === "Lred") {
+        //лево - красное
+        if (LeftStatus === "Lred" && RightStatus === "Rgreen") {
             radarPosition -= 1;
+            step += 1;
+            stepscollect(`-1px (красный, позиция: ${radarPosition}px)`);
             console.log("-1");
-            step += 1;
         }
-        else if (LeftStatus === "Lyellow") {
-            radarPosition -= 5;
-            console.log("-5");
+        //лево - желтое
+        else if (LeftStatus === "Lyellow" && RightStatus === "Rgreen") {
+            radarPosition -= 6;
             step += 1;
+            stepscollect(`-6px (желтый, позиция: ${radarPosition}px)`);
+            console.log("-6");
+        }
+        //лево - красное, право - желтое
+        else if (LeftStatus === "Lred" && RightStatus === "Ryellow") {
+            const leftDents = dentsArray.filter(dent => dent < radarPosition);
+            const hasLeftDent = leftDents.length > 0;
+            const rightDents = dentsArray.filter(dent => dent > radarPosition);
+            const hasRightDent = rightDents.length > 0;
+
+            if (hasLeftDent) {
+                radarPosition -= 1;
+                step += 1;
+                stepscollect(`-1px (красный-желтый, есть дефект слева, позиция: ${radarPosition}px)`);
+                console.log("-1 (дефект слева)");
+            }
+            else if (hasRightDent) {
+                radarPosition = prevPosition + 6;
+                step += 1;
+                stepscollect(`+6px (красный-желтый, нет дефектов слева, есть справа, позиция: ${radarPosition}px)`);
+                console.log("+6 (дефект справа)");
+            }
+            else {
+                radarPosition += 6;
+                step += 1;
+                stepscollect(`+6px (красный-желтый, неожиданный случай, позиция: ${radarPosition}px)`);
+                console.log("+6 (неожиданный случай)");
+            }
+        }
+        //лево - желтое, право - красное (НОВЫЙ БЛОК)
+        else if (LeftStatus === "Lyellow" && RightStatus === "Rred") {
+            const leftDents = dentsArray.filter(dent => dent < radarPosition);
+            const hasLeftDent = leftDents.length > 0;
+            const rightDents = dentsArray.filter(dent => dent > radarPosition);
+            const hasRightDent = rightDents.length > 0;
+
+            if (hasLeftDent) {
+                radarPosition -= 6;
+                step += 1;
+                stepscollect(`-6px (желтый-красный, есть дефект слева, позиция: ${radarPosition}px)`);
+                console.log("-6 (дефект слева)");
+            }
+            else if (hasRightDent) {
+                radarPosition = prevPosition + 1;
+                step += 1;
+                stepscollect(`+1px (желтый-красный, нет дефектов слева, есть справа, позиция: ${radarPosition}px)`);
+                console.log("+1 (дефект справа)");
+            }
+            else {
+                radarPosition += 1;
+                step += 1;
+                stepscollect(`+1px (желтый-красный, неожиданный случай, позиция: ${radarPosition}px)`);
+                console.log("+1 (неожиданный случай)");
+            }
+        }
+//лево - красное , право - красное
+        else if (LeftStatus === "Lred" && RightStatus === "Rred") {
+            const leftDents = dentsArray.filter(dent => dent < radarPosition);
+            const hasLeftDent = leftDents.length > 0;
+            const rightDents = dentsArray.filter(dent => dent > radarPosition);
+            const hasRightDent = rightDents.length > 0;
+
+            if (hasLeftDent) {
+                radarPosition -= 1;
+                step += 1;
+                stepscollect(`-1px (красный-красный, есть дефект слева, позиция: ${radarPosition}px)`);
+                console.log("-1 (дефект слева)");
+            }
+            else if (hasRightDent) {
+                radarPosition =prevPosition + 1;
+                step += 1;
+                stepscollect(`+1px (красный-красный, нет дефектов слева, есть справа, позиция: ${radarPosition}px)`);
+                console.log("+1 (дефект справа)");
+            }
+            else {
+                radarPosition += 1;
+                step += 1;
+                stepscollect(`+1px (красный-красный, неожиданный случай, позиция: ${radarPosition}px)`);
+                console.log("+1 (неожиданный случай)");
+            }
+        }
+        //лево - желто, право - желто
+        else if (LeftStatus === "Lyellow" && RightStatus === "Ryellow") {
+            const leftDents = dentsArray.filter(dent => dent < radarPosition);
+            const hasLeftDent = leftDents.length > 0;
+            const rightDents = dentsArray.filter(dent => dent > radarPosition);
+            const hasRightDent = rightDents.length > 0;
+
+            if (hasLeftDent) {
+                radarPosition -= 6;
+                step += 1;
+                stepscollect(`-6px (желтый-желтый, есть дефект слева, позиция: ${radarPosition}px)`);
+                console.log("-6 (дефект слева)");
+            }
+            else if (hasRightDent) {
+                radarPosition = prevPosition + 6;
+                step += 1;
+                stepscollect(`+6px (желтый-желтый, нет дефектов слева, есть справа, позиция: ${radarPosition}px)`);
+                console.log("+6 (дефект справа)");
+            }
+            else {
+                radarPosition += 6;
+                step += 1;
+                stepscollect(`+6px (желтый-желтый, неожиданный случай, позиция: ${radarPosition}px)`);
+                console.log("+6 (неожиданный случай)");
+            }
         }
 
-        // Проверяем границы рельса
+        else if (RightStatus === "Rgreen" && LeftStatus === "Lgreen") {
+            radarPosition += 20;
+            step += 1;
+            stepscollect(`Быстрое движение +20 (позиция: ${radarPosition}px)`);
+            console.log("+20");
+        }
+        else if (RightStatus === "Ryellow" && LeftStatus === "Lgreen") {
+            radarPosition += 6;
+            step += 1;
+            stepscollect(`+6 (позиция: ${radarPosition}px)`);
+            console.log("+6");
+        }
+        else if (RightStatus === "Rred" && LeftStatus === "Lgreen") {
+            radarPosition += 1;
+            step += 1;
+            stepscollect(`+1 (позиция: ${radarPosition}px)`);
+            console.log("+1");
+        }
+
         if (radarPosition < 0) radarPosition = 0;
         if (radarPosition > railWidth) radarPosition = railWidth;
 
-        // Если позиция изменилась - вызываем сборщик шагов
-        if (radarPosition !== prevPosition) {
-            stepscollect();
-        }
-
         radar.style.left = radarPosition + "px";
-        RightCheck(); // Обновляем статусы
+        RightCheck();
 
-        // Продолжаем сканирование
-        setTimeout(scanStep, 70);
+        setTimeout(scanStep, 50);
     }
 
     scanStep();
 }
-
-function stepscollect() {
+function stepscollect(message, isDentFound = false) {
     let container1 = document.getElementById("container1");
     let stepInfo = document.createElement("div");
-    stepInfo.textContent = `Шаг ${step}: радар перешел на позицию: ${radarPosition}px`;
-    container1.appendChild(stepInfo);
 
-    // Прокручиваем контейнер к последнему добавленному шагу
+    if (isDentFound) {
+        stepInfo.className = "dent-found";
+        stepInfo.textContent = message;
+    } else {
+        stepInfo.className = "step-info";
+        stepInfo.textContent = `Шаг ${step}: ${message}`;
+    }
+
+    container1.appendChild(stepInfo);
     container1.scrollTop = container1.scrollHeight;
+}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+<link rel="stylesheet" href="project.css">
+</head>
+<body>
+<div class = "logo"><img src="https://upload.wikimedia.org/wikipedia/commons/4/41/Evraz_ru.svg"  ></div>
+<div class = "top">
+    <div class = "top-input" >
+
+        <div>Длинна рельса (см): <input type="number" class = "top_input" id = "top_input" min = "1" placeholder="Пример: 500"></div>
+    </div>
+    <div class = "down-input" >
+        <div>Координаты дефектов : <input type="text" class = "down_input" id = "down_input" placeholder="Пример: 5, 15 ,25"></div>
+    </div>
+    <div><button onclick="add()">Запустить программу</button></div>
+</div>
+<div class = "down-picture">
+    <div id = "container">
+
+
+
+    </div>
+</div>
+<div class = "down-text">
+    <div id = "down-text">
+        <div id = "container1"></div>
+    </div>
+</div>
+
+<div id="rollers-container" style="display:none; position:absolute; bottom:0; width:100%; height:30px;">
+    <div class="roller" style="left:10%"></div>
+    <div class="roller" style="left:30%"></div>
+    <div class="roller" style="left:50%"></div>
+    <div class="roller" style="left:70%"></div>
+    <div class="roller" style="left:90%"></div>
+</div>
+<script src="project.js"></script>
+</body>
+</html>
+/* Базовые стили */
+body {
+font-family: Arial, sans-serif;
+margin: 0;
+padding: 20px;
+background-color: #f5f5f5;
+}
+
+/* Логотип */
+.logo {
+position: absolute;
+top: 20px;
+left: 20px;
+z-index: 20;
+height: 40px;
+width: 150px;
+border-radius: 8px;
+box-shadow: 0 2px 8px rgb(211, 85, 16);
+display: flex;
+align-items: center;
+justify-content: center;
+padding: 5px;
+}
+
+.logo img {
+max-height: 100%;
+max-width: 100%;
+}
+
+/* Верхняя панель управления */
+.top {
+background-color: #fff;
+max-width: 600px;
+position: relative;
+margin: 70px auto 20px;
+padding: 20px;
+border-radius: 8px;
+box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.top div {
+margin-bottom: 15px;
+display: flex;
+align-items: center;
+justify-content: space-between;
+}
+
+.top-input,
+.down-input {
+width: 100%;
+}
+
+.top input,
+.down-input input {
+padding: 8px;
+width: 60%;
+border: 1px solid #ccc;
+border-radius: 4px;
+outline: none;
+transition: border-color 0.3s;
+}
+
+.top input:focus,
+.down-input input:focus {
+border-color: darkorange;
+}
+
+button {
+background-color: #FF4500;
+color: #fff;
+border: none;
+padding: 10px 25px;
+border-radius: 4px;
+cursor: pointer;
+font-size: 1em;
+transition: background-color 0.3s ease;
+}
+
+button:hover {
+background-color: #FF4506;
+}
+
+/* Область визуализации */
+.down-picture {
+max-width: 800px;
+margin: 20px auto;
+background-color: #fff;
+padding: 20px;
+border-radius: 8px;
+box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+#container {
+width: 100%;
+min-height: 300px;
+margin-top: 20px;
+position: relative;
+}
+
+/* Стили для рельса и элементов */
+.sleeper {
+position: relative;
+width: 550px;
+height: 100px;
+margin: 15px auto;
+background: linear-gradient(145deg, #7c7c7c, #505050);
+border: 1px solid #444;
+border-radius: 4px;
+box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.6),
+    inset 1px 1px 2px rgba(255, 255, 255, 0.1);
+
+}
+
+.dent {
+position: absolute;
+width: 16px;
+height: 16px;
+top: 50%;
+transform: translateY(-50%);
+border-radius: 50%;
+z-index: 5;
+background: linear-gradient(145deg, #4a4a4a, #2d2d2d);
+border: 1px solid #333;
+box-shadow: inset 2px 2px 4px rgba(255, 255, 255, 0.2),
+inset -2px -2px 4px rgba(0, 0, 0, 0.5),
+    0 0 3px rgba(0, 0, 0, 0.8);
+transition: all 0.2s ease;
+}
+
+.dent:hover {
+transform: translateY(-50%) scale(1.1);
+box-shadow: inset 2px 2px 4px rgba(255, 255, 255, 0.3),
+inset -2px -2px 4px rgba(0, 0, 0, 0.6),
+    0 0 5px rgba(0, 0, 0, 0.9);
+}
+
+.radar {
+position: absolute;
+left: 0;
+top: 50%;
+transform: translateY(-50%);
+width: 4px;
+height: 130%;
+background-color: rgba(255, 0, 0, 0.7);
+box-shadow: 0 0 10px 2px rgba(255, 0, 0, 0.5);
+z-index: 10;
+/*transition: left 0.1s linear;*/
+}
+
+/* Индикаторы радара */
+.radar-indicators {
+position: absolute;
+top: -40px;
+left: 50%;
+transform: translateX(-50%);
+display: flex;
+gap: 30px;
+z-index: 15;
+}
+
+.indicator {
+width: 20px;
+height: 20px;
+border-radius: 50%;
+background-color: gray;
+border: 2px solid #333;
+transition: all 0.3s ease;
+}
+
+.indicator.green {
+background-color: #00ff00;
+box-shadow: 0 0 10px #00ff00;
+}
+
+.indicator.yellow {
+background-color: #ffff00;
+box-shadow: 0 0 10px #ffff00;
+}
+
+.indicator.red {
+background-color: #ff0000;
+box-shadow: 0 0 10px #ff0000;
+}
+
+/* Анимации */
+@keyframes radar-scan {
+0%, 100% { box-shadow: 0 0 10px 2px rgba(255, 0, 0, 0.5); }
+50% { box-shadow: 0 0 15px 4px rgba(255, 0, 0, 0.8); }
+}
+
+@keyframes dent-detected {
+0% { box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.7); }
+70% { box-shadow: 0 0 0 10px rgba(255, 0, 0, 0); }
+100% { box-shadow: 0 0 0 0 rgba(255, 0, 0, 0); }
+}
+.dent-found {
+color: #ff0000;
+font-weight: bold;
+background-color: #fff0f0;
+padding: 3px;
+border-left: 3px solid #ff0000;
+margin: 3px 0;
+}
+/* Добавьте в project.css */
+@keyframes rollIn {
+0% {
+    transform: translateX(100%) rotate(0deg);
+}
+100% {
+    transform: translateX(0) rotate(720deg);
+}
+}
+
+@keyframes rollerSpin {
+0% {
+    transform: rotate(0deg);
+}
+100% {
+    transform: rotate(360deg);
+}
+}
+
+.rail-rolling {
+animation: rollIn 1.5s ease-out forwards;
+}
+
+.roller {
+position: absolute;
+width: 30px;
+height: 30px;
+background: #555;
+border-radius: 50%;
+border: 2px solid #333;
+box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+display: none;
+}
+
+.roller:after {
+content: "";
+position: absolute;
+width: 10px;
+height: 10px;
+background: #888;
+border-radius: 50%;
+top: 10px;
+left: 10px;
+}
+
+.roller.active {
+display: block;
+animation: rollerSpin 1.5s linear infinite;
+}
+
+#rollers-container {
+z-index: 5;
+pointer-events: none;
 }
